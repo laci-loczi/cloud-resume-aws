@@ -1,0 +1,29 @@
+name: Deploy to AWS S3 & CloudFront
+
+on:
+  push:
+    branches:
+      - main  # Csak akkor fusson, ha a main ágra tolunk kódot
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kód letöltése (Checkout)
+      uses: actions/checkout@v3
+
+    - name: AWS CLI beállítása
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+        aws-region: eu-central-1 # VAGY amilyen régióban vagy (pl. us-east-1)
+
+    - name: Feltöltés S3-ra (Sync)
+      run: |
+        aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
+
+    - name: CloudFront Cache Ürítése (Invalidation)
+      run: |
+        aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
