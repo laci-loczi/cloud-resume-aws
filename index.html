@@ -8,6 +8,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- Language Switcher --- */
+        .lang-switch {
+            display: flex;
+            gap: 15px;
+            margin-left: 20px; /* Hogy ne folyjon össze a névvel */
+        }
+
+        .lang-btn {
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: transform 0.2s, opacity 0.2s;
+            opacity: 0.5; /* Alapból halvány */
+            filter: grayscale(100%); /* Szürke, ha nem aktív */
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.2);
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+            filter: grayscale(0%); /* Az aktív nyelv színes */
+            cursor: default; /* Az aktívra nem kell kattintani */
+            pointer-events: none;
+        }
+
         :root {
             --bg-color: #0f172a; /* Slate 900 - Professzionális sötétkék */
             --card-bg: #1e293b; /* Slate 800 */
@@ -290,11 +318,19 @@
 <body>
 
     <header>
+    <div style="display: flex; align-items: center;">
         <div class="brand">Lóczi László</div>
-        <div class="visitor-badge">
-            <span class="status-dot"></span>
-            <span id="counter">Loading...</span> Visitors
+        
+        <div class="lang-switch">
+            <a href="#" class="lang-btn active">🇭🇺</a>
+            <a href="index_en.html" class="lang-btn">🇬🇧</a>
         </div>
+    </div>
+
+    <div class="visitor-badge">
+        <span class="status-dot"></span>
+        <span id="counter">Loading...</span> Visitors
+    </div>
     </header>
 
     <main>
