@@ -262,35 +262,16 @@
     <script>
         const API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter";
 
-        const counterElement = document.getElementById('counter');
-        
-        // Megnézzük, jártunk-e már itt ebben a munkamenetben
-        const hasVisited = sessionStorage.getItem('visited');
-        
-        let finalUrl = BASE_API_URL;
-
-        if (hasVisited) {
-            // Ha már voltunk itt: Csak olvassuk ki a friss számot (?mode=read)
-            console.log("Már jártál itt -> Csak olvasás (Update a DB-ből)");
-            finalUrl = BASE_API_URL + "?mode=read";
-        } else {
-            // Ha még nem voltunk itt: Ez növelni fogja a számlálót
-            console.log("Új látogatás -> Számláló növelése");
-            // Jelöljük meg, hogy most már jártunk itt
-            sessionStorage.setItem('visited', 'true');
-        }
-
-        fetch(finalUrl)
+        fetch(API_URL)
             .then(res => res.json())
             .then(data => {
-                counterElement.innerText = data;
+                document.getElementById('counter').innerText = data;
             })
             .catch(err => {
                 console.error("API Error:", err);
-                counterElement.innerText = "-";
+                document.getElementById('counter').innerText = "-";
             });
 
-        // Modal logika (Ez változatlan)
         function toggleModal() {
             const modal = document.getElementById('archModal');
             modal.classList.toggle('active');
