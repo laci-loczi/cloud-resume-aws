@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initialize Session | Lóczi László</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="welcome-page">
+
+    <div class="loader-overlay" id="loader">
+        <div class="loader-text">> ESTABLISHING_CONNECTION...</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="prog-fill"></div>
+        </div>
+    </div>
+
+    <h1 class="welcome-title">> Select a region</h1>
+
+    <div class="welcome-container" id="main-container">
+        
+        <a href="index.html" class="route-card" onclick="startSession(event, 'hu', 'index.html')">
+            <img src="https://flagcdn.com/w160/hu.png" alt="Hungary Flag" class="flag">
+            <span class="region-code">Magyar nyelvű oldal</span>
+        </a>
+
+        <a href="index_en.html" class="route-card" onclick="startSession(event, 'en', 'index_en.html')">
+            <img src="https://flagcdn.com/w160/gb.png" alt="UK Flag" class="flag">
+            <span class="region-code">English page</span>
+        </a>
+
+    </div>
+
+    <script>
+        function startSession(event, lang, url) {
+            event.preventDefault();
+            sessionStorage.setItem('lang_pref', lang);
+
+            const loaderText = document.querySelector('.loader-text');
+
+            if (lang === 'hu') {
+                loaderText.innerText = "> KAPCSOLAT_LÉTESÍTÉSE...";
+            } else {
+                loaderText.innerText = "> ESTABLISHING_CONNECTION...";
+            }
+
+            document.getElementById('main-container').classList.add('fading');
+            const loader = document.getElementById('loader');
+            loader.classList.add('active');
+
+            setTimeout(() => {
+                document.getElementById('prog-fill').style.width = "100%";
+            }, 100);
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1200);
+        }
+    </script>
+
+</body>
+</html>
