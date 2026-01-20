@@ -260,24 +260,47 @@
     </footer>
 
     <script>
-        const API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter";
+        // A Te API URL-ed (paraméterek nélkül!)
+        const BASE_API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter";
 
-        fetch(API_URL)
+        // Látogatószámláló logika
+        const counterElement = document.getElementById('counter');
+        
+        // Megnézzük a böngésző memóriáját: jártunk-e már itt ebben a munkamenetben?
+        const hasVisited = sessionStorage.getItem('visited');
+        
+        let finalUrl = BASE_API_URL;
+
+        if (hasVisited) {
+            // Ha már voltunk itt (tehát csak frissítesz):
+            // Hozzáfűzzük a ?mode=read-et -> A Lambda csak olvasni fog (látod, ha más növelte), de te nem növeled.
+            finalUrl = BASE_API_URL + "?mode=read";
+        } else {
+            // Ha ez új látogatás (új lapfül vagy ablak):
+            // Nem fűzünk hozzá semmit (vagy ?mode=write) -> A Lambda növelni fog.
+            sessionStorage.setItem('visited', 'true');
+        }
+
+        fetch(finalUrl)
             .then(res => res.json())
             .then(data => {
-                document.getElementById('counter').innerText = data;
+                counterElement.innerText = data;
             })
             .catch(err => {
                 console.error("API Error:", err);
-                document.getElementById('counter').innerText = "-";
+                counterElement.innerText = "-";
             });
 
+        // Modal Kezelés (Architektúra megjelenítése) - EZ VÁLTOZATLAN
         function toggleModal() {
             const modal = document.getElementById('archModal');
             modal.classList.toggle('active');
         }
+
         document.getElementById('archModal').addEventListener('click', function(e) {
-            if (e.target === this) { toggleModal(); }
+            if (e.target === this) {
+                toggleModal();
+            }
         });
     </script>
 </body>
