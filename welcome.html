@@ -33,32 +33,7 @@
 
     </div>
 
-    <script>
-        function startSession(event, lang, url) {
-            event.preventDefault();
-            sessionStorage.setItem('lang_pref', lang);
-
-            const loaderText = document.querySelector('.loader-text');
-
-            if (lang === 'hu') {
-                loaderText.innerText = "> KAPCSOLAT_LÉTESÍTÉSE...";
-            } else {
-                loaderText.innerText = "> ESTABLISHING_CONNECTION...";
-            }
-
-            document.getElementById('main-container').classList.add('fading');
-            const loader = document.getElementById('loader');
-            loader.classList.add('active');
-
-            setTimeout(() => {
-                document.getElementById('prog-fill').style.width = "100%";
-            }, 100);
-
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1200);
-        }
-    </script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>

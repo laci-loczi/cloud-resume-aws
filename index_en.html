@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lóczi László - Cloud & DevOps Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="css/style.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+
 </head>
 <body>
     <div id="tsparticles"></div>
     <header>
         <div style="display: flex; align-items: center;">
             <div class="brand">László Lóczi</div>
-            <div class="lang-switch">
-                <a href="index.html" class="lang-btn">🇭🇺</a>
-                <a href="#" class="lang-btn active">🇬🇧</a>
-            </div>
+                <div class="lang-switch">
+                    <a href="index.html" class="lang-btn">🇭🇺</a>
+                    <a href="#" class="lang-btn active">🇬🇧</a>
+                </div>
         </div>
         <div class="visitor-badge">
             <span class="status-dot"></span>
@@ -31,7 +31,17 @@
         <div class="hero">
             <h1>Cloud & DevOps Engineer</h1>
             <p>Computer Science Engineering Student at BME VIK.</p>
-            <button class="btn btn-outline" onclick="toggleModal()"><i class="fas fa-sitemap"></i> Architecture</button>
+            <div class="hero-actions">
+                
+                <a href="cv.pdf" target="_blank" class="btn">
+                    <i class="fas fa-file-pdf"></i> View CV
+                </a>
+
+                <button class="btn btn-outline" onclick="toggleModal()">
+                    <i class="fas fa-sitemap"></i> Architecture
+                </button>
+                
+            </div>
         </div>
 
         <div class="grid-container">
@@ -79,20 +89,20 @@
     </div>
 
     <footer>
-        <a href="mailto:loczilaci0121@gmail.com" class="btn">
-            <i class="fas fa-envelope"></i> Email
-        </a>
+        <div class="footer-actions">
+            <a href="mailto:loczilaci0121@gmail.com" class="btn">
+                <i class="fas fa-envelope"></i> Email
+            </a>
 
-        <a href="https://www.linkedin.com/in/lóczi-lászló-779696296/" 
-        target="_blank" 
-        class="btn">
-            <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
+            <a href="https://www.linkedin.com/in/lóczi-lászló-779696296/" target="_blank" class="btn">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+        </div>
 
         <p>&copy; 2026 Lóczi László | Hosted on AWS Cloud</p>
     </footer>
 
     <script src="js/main.js"></script>
-    
+
 </body>
 </html>

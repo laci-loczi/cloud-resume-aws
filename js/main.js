@@ -1,5 +1,34 @@
 const BASE_API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter"; 
 
+//welcome page logic
+function startSession(event, lang, url) {
+    event.preventDefault();
+    sessionStorage.setItem('lang_pref', lang);
+
+    const loaderText = document.querySelector('.loader-text');
+
+    if (!loaderText) return;
+
+    if (lang === 'hu') {
+        loaderText.innerText = "> KAPCSOLAT_LÉTESÍTÉSE...";
+    } else {
+        loaderText.innerText = "> ESTABLISHING_CONNECTION...";
+    }
+
+    document.getElementById('main-container').classList.add('fading');
+    const loader = document.getElementById('loader');
+    loader.classList.add('active');
+
+    setTimeout(() => {
+        const progFill = document.getElementById('prog-fill');
+        if (progFill) progFill.style.width = "100%";
+    }, 100);
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 1200);
+}
+
 //particles logic
 (async () => {
     await tsParticles.load("tsparticles", {
