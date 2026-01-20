@@ -260,25 +260,44 @@
     </footer>
 
     <script>
-        // --- API URL - INSERT YOURS HERE ---
+        // --- API URL (EZ MARAD A RÉGI) ---
         const API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter";
 
-        fetch(API_URL)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('counter').innerText = data;
-            })
-            .catch(err => {
-                console.error("API Error:", err);
-                document.getElementById('counter').innerText = "-";
-            });
+        const counterElement = document.getElementById('counter');
 
+        // 1. Megnézzük, van-e már elmentett szám a böngésző "munkamenet" memóriájában
+        const cachedCount = sessionStorage.getItem('visitorCount');
+
+        if (cachedCount) {
+            // A Terv: Ha már van szám, nem zaklatjuk az AWS-t, csak kiírjuk a tárolt értéket.
+            console.log("Adatok betöltése cache-ből (Nyelvváltás történt)");
+            counterElement.innerText = cachedCount;
+        } else {
+            // B Terv: Ha nincs szám, ez egy új látogatás. Hívjuk az API-t!
+            console.log("Új látogatás érzékelése - API hívás...");
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    // 1. Kiírjuk a számot
+                    counterElement.innerText = data;
+                    // 2. ELMENTJÜK a memóriába, hogy legközelebb ne hívjuk meg
+                    sessionStorage.setItem('visitorCount', data);
+                })
+                .catch(err => {
+                    console.error("API Error:", err);
+                    counterElement.innerText = "-";
+                });
+        }
+
+        // Modal (Architektúra ablak) kezelése - EZ MARAD UGYANAZ
         function toggleModal() {
             const modal = document.getElementById('archModal');
             modal.classList.toggle('active');
         }
         document.getElementById('archModal').addEventListener('click', function(e) {
-            if (e.target === this) { toggleModal(); }
+            if (e.target === this) {
+                toggleModal();
+            }
         });
     </script>
 </body>
