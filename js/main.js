@@ -2,7 +2,7 @@
 const BASE_API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter"; 
 const STATUS_API_URL = "https://l7cncxdfwh.execute-api.eu-north-1.amazonaws.com/default/PortfolioStatusAPI";
 const ARCH_API_URL = "https://6er0sghd22.execute-api.eu-north-1.amazonaws.com/default/PortfolioArchStats";
-//const WEATHER_API_URL = "https://kx2f67wdlu4tzvlpxl6mkny6wa0bcwnv.lambda-url.eu-north-1.on.aws/";
+const WEATHER_API_URL = "https://kx2f67wdlu4tzvlpxl6mkny6wa0bcwnv.lambda-url.eu-north-1.on.aws/";
 // welcome page logic
 // language selection, triggers loading animation, goes to the main site
 function startSession(event, lang, url) {
