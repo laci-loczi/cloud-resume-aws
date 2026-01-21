@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-
+    <!---->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lóczi László - Cloud & DevOps Engineer</title>
+    <title>Lóczi László | Mérnökinformatikus hallgató</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/features.css">
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -17,11 +19,13 @@
     <header>
         <div style="display: flex; align-items: center;">
             <div class="brand">Lóczi László</div>
+                <!-- language selector -->
                 <div class="lang-switch">
                     <a href="#" class="lang-btn active">🇭🇺</a>
                     <a href="index_en.html" class="lang-btn">🇬🇧</a>
                 </div>
         </div>
+        <!-- visitor counter -->
         <div class="visitor-badge">
             <span class="status-dot"></span>
             <span id="counter">Loading...</span> Visitors
@@ -31,7 +35,7 @@
     <main>
         <div class="hero">
             <h1>Cloud & DevOps Engineer</h1>
-            <p>BME VIK mérnökinformatikus hallgató. Automatizáció, Felhő technológiák és Skálázható rendszerek építése.</p>
+            <p>BME VIK mérnökinformatikus hallgató.</p>
             <div class="hero-actions">
                 
                 <a href="cv.pdf" target="_blank" class="btn">
@@ -44,7 +48,7 @@
                 
             </div>
         </div>
-
+        <!-- cards -->
         <div class="grid-container">
             <div class="card">
                 <h3><i class="fas fa-user-graduate"></i> Rólam</h3>
@@ -58,37 +62,255 @@
                     <li>CI/CD (GitHub Actions)</li>
                 </ul>
             </div>
+            <!-- card for latency monitoring -->
+            <div class="card" style="grid-column: span 2; display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-chart-line"></i> Rendszer válaszidő monitor</h3>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 0.8rem; color: #22c55e; background: rgba(34, 197, 94, 0.1); padding: 5px 10px; border-radius: 20px;">
+                            ● Elő adatok
+                        </span>
+                        <button onclick="toggleFlip()" id="btn-info" style="background: transparent; border: 1px solid #334155; color: #38bdf8; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: all 0.3s; z-index: 50;">
+                            <i class="fas fa-info"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- flippable card -->
+                <div class="flip-scene" style="position: relative; width: 100%; height: 320px; perspective: 1000px;">                
+                    <div id="flip-wrapper" class="flip-card-inner">
+                        <!-- flip card front -->
+                        <div class="flip-card-front">
+                            <div style="position: relative; height: 100%; width: 100%;">
+                                <canvas id="uptimeChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- flip card back -->                       
+                        <div class="flip-card-back">
+                            <div class="blueprint-grid">                                
+                                <div class="bp-node" style="grid-area: clock;">
+                                    <i class="fas fa-clock bp-icon"></i>
+                                    <div class="bp-label">EventBridge</div>
+                                    <div class="bp-sub">Cron: 20p</div>
+                                    <div class="bp-tooltip">
+                                        Automatikusan felébreszti a rendszert 20 percenként.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical" style="grid-area: w1;">
+                                    <div class="bp-electron"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: writer;">
+                                    <i class="fab fa-aws bp-icon"></i>
+                                    <div class="bp-label">Lambda (W)</div>
+                                    <div class="bp-sub">Python</div>
+                                    <div class="bp-tooltip">
+                                        Méri a válaszidőket és menti az adatbázisba.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical" style="grid-area: w2;">
+                                    <div class="bp-electron delay-1"></div>
+                                </div>
+
+                                <div class="bp-node db-node" style="grid-area: db;">
+                                    <i class="fas fa-database bp-icon"></i>
+                                    <div class="bp-label">DynamoDB</div>
+                                    <div class="bp-sub">TTL Enabled</div>
+                                    <div class="bp-tooltip">
+                                        NoSQL adatbázis. A régi adatok 24 óra utén törlődnek az adatbázisból.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical reverse" style="grid-area: w3;">
+                                    <div class="bp-electron delay-2"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: reader;">
+                                    <i class="fab fa-aws bp-icon"></i>
+                                    <div class="bp-label">Lambda (R)</div>
+                                    <div class="bp-sub">API Handler</div>
+                                    <div class="bp-tooltip">
+                                        Kiolvassa és átlagolja az adatokat a Frontendnek.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical reverse" style="grid-area: w4;">
+                                    <div class="bp-electron delay-3"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: api;">
+                                    <i class="fas fa-globe bp-icon"></i>
+                                    <div class="bp-label">Frontend</div>
+                                    <div class="bp-sub">Chart.js</div>
+                                    <div class="bp-tooltip">
+                                        Kirajzolja a grafikont, amin le lehet olvasni az adatokat.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
+    <!-- system architecture -->
     <div class="modal-overlay" id="archModal">
         <div class="modal-content">
             <button class="close-btn" onclick="toggleModal()">&times;</button>
-            <h2 style="text-align: center; margin-bottom: 20px;">Hogyan működik ez az oldal?</h2>
             
-            <div class="diagram">
-                
-                <div class="node" style="border-color: #fff;">
-                    <i class="fas fa-user" style="color: #fff;"></i> <strong>Látogató</strong>
-                </div>
-                <div class="arrow-down"></div>
-                <div class="diagram-row">
-                    <div class="node"><i class="fas fa-cloud"></i> <strong>CloudFront</strong> <small>CDN & HTTPS</small></div>
-                    <div class="node"><i class="fab fa-aws"></i> <strong>S3 Bucket</strong> <small>Statikus HTML/CSS</small></div>
-                </div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fas fa-door-open"></i> <strong>API Gateway</strong> <small>REST API Végpont</small></div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fab fa-python"></i> <strong>AWS Lambda</strong> <small>Python Kód</small></div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fas fa-database"></i> <strong>DynamoDB</strong> <small>Adattárolás</small></div>
+            <div style="text-align: left; border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #fff;">System Architecture</h2>
             </div>
-            <p style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: var(--text-secondary);">
-                Az infrastruktúra 100% Serverless, az AWS-en fut, és <strong>GitHub Actions</strong> segítségével kerül élesbe.
-            </p>
+            
+            <div class="infra-map">
+                
+                <div class="zone" style="border-color: #38bdf8;">
+                    <div class="zone-label" style="color: #38bdf8;">CLIENT & EDGE</div>
+                    
+                    <div class="infra-row">
+                        <div class="tech-node">
+                            <i class="fas fa-laptop" style="color: #fff;"></i>
+                            <span>Visitor</span>
+                        </div>
+                        
+                        <div class="conn-line">
+                            <span class="conn-label">HTTPS</span>
+                            <div class="conn-arrow"></div>
+                        </div>
+
+                        <div class="tech-node">
+                            <i class="fas fa-globe-americas" style="color: #d946ef;"></i>
+                            <span>CloudFront</span>
+                            <small>Global CDN</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; margin: -10px 0;">
+                    <i class="fas fa-link" style="color: #475569; transform: rotate(90deg);"></i>
+                </div>
+
+                <div class="zone" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.02);">
+                    <div class="zone-label" style="color: #f59e0b;">AWS CLOUD (eu-north-1)</div>
+                    
+                    <div class="cloud-grid">
+                        
+                        <div class="cloud-group">
+                            <div class="group-title">FRONTEND & TRIGGERS</div>
+                            
+                            <div class="tech-node flat" style="margin-bottom: 20px;">
+                                <i class="fab fa-aws" style="color: #eab308;"></i>
+                                <div>
+                                    <strong>S3 Bucket</strong><br>
+                                    <small>Static Assets</small>
+                                </div>
+                            </div>
+
+                            <div class="tech-node flat" style="border-color: #ec4899;">
+                                <i class="fas fa-clock" style="color: #ec4899;"></i>
+                                <div>
+                                    <strong>EventBridge</strong><br>
+                                    <small>Cron (20 min)</small>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #64748b; font-size: 0.7rem; margin-top: 5px;">
+                                &darr; Triggers Lambda
+                            </div>
+                        </div>
+
+                        <div class="cloud-group">
+                            <div class="group-title">BACKEND LOGIC</div>
+                            
+                            <div class="tech-node flat">
+                                <i class="fas fa-door-open" style="color: #8b5cf6;"></i>
+                                <div>
+                                    <strong>API Gateway</strong><br>
+                                    <small>HTTP API</small>
+                                </div>
+                            </div>
+                            
+                            <div class="v-line"></div>
+
+                            <div class="tech-node flat" style="border: 1px solid #38bdf8; box-shadow: 0 0 10px rgba(56,189,248,0.1);">
+                                <i class="fab fa-python" style="color: #38bdf8;"></i>
+                                <div>
+                                    <strong>Lambda Function</strong><br>
+                                    <small>Python 3.13</small>
+                                </div>
+                            </div>
+
+                            <div class="v-line"></div>
+
+                            <div class="tech-node flat">
+                                <i class="fas fa-database" style="color: #22c55e;"></i>
+                                <div>
+                                    <strong>DynamoDB</strong><br>
+                                    <small>NoSQL + TTL</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="devops-bar">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: bold; color: #fff;">CI/CD:</span>
+                        <span class="pill"><i class="fab fa-git-alt"></i> Push</span>
+                        <span class="arrow">&rarr;</span>
+                        <span class="pill"><i class="fas fa-robot"></i> GitHub Actions</span>
+                        <span class="arrow">&rarr;</span>
+                        <span class="pill"><i class="fas fa-sync"></i> Deploy to AWS</span>
+                    </div>
+                </div>
+
+            </div>
+            <details class="tech-docs">
+                <summary>
+                    <i class="fas fa-book"></i> Részletes Technikai Dokumentáció
+                    <span class="dropdown-icon">▼</span>
+                </summary>
+                
+                <div class="docs-body">
+                    <h3>1. Frontend és Kézbesítés</h3>
+                    <p>
+                        A weboldal statikus HTML, CSS és JavaScript fájlokból áll. Ezeket az <strong>Amazon S3</strong> (Simple Storage Service) tárolja. 
+                        A gyors globális elérés érdekében a tartalmat az <strong>Amazon CloudFront</strong> (CDN) gyorsítótárazza, így a felhasználók a hozzájuk legközelebbi Edge Location-ről kapják az adatokat.
+                    </p>
+
+                    <h3>2. Backend API és Logika</h3>
+                    <p>
+                        A rendszer nem használ állandó szervereket. Minden kérés egy <strong>HTTP API Gateway</strong>-en keresztül érkezik, amely automatikusan skálázódik.
+                        Az API végpontok mögött <strong>AWS Lambda</strong> függvények futnak Python 3.13 környezetben. Ezek a függvények csak akkor futnak, amikor kérés érkezik.
+                    </p>
+
+                    <h3>3. Adatbázis és Állapotkezelés</h3>
+                    <p>
+                        Az adatok tárolásáért egy <strong>Amazon DynamoDB</strong> (NoSQL) adatbázis felel. Két fő tábla működik:
+                    </p>
+                    <ul>
+                        <li><strong>VisitorCount:</strong> Atomikus számlálóval növeli a látogatók számát minden oldalmegtekintéskor.</li>
+                        <li><strong>UptimeLogs:</strong> Itt tárolódnak a pingelési eredmények. A táblán be van kapcsolva a <strong>TTL (Time-To-Live)</strong>, így a 24 óránál régebbi rekordok automatikusan törlődnek.</li>
+                    </ul>
+
+                    <h3>4. Automatizált Monitoring</h3>
+                    <p>
+                        Az <strong>Amazon EventBridge</strong> 20 percenként elindítja a mérő (Writer) Lambdát. Ez a függvény megpingeli a külső szolgáltatásokat, és elmenti a válaszidőket az adatbázisba.
+                        Ezután a Frontend lekéri ezeket a friss adatokat a "Reader" Lambdán keresztül, és a Chart.js segítségével kirajzolja a valós idejű grafikont.
+                    </p>
+
+                    <h3>5. CI/CD Pipeline</h3>
+                    <p>
+                        Amikor a kód felkerül a GitHub repository-ba (egy push-al), elindul egy <strong>GitHub Actions</strong> folyamat.
+                        Ez a pipeline automatikusan frissíti az S3 vödröt az új/frissített HTML/CSS fájlokkal, és deployolja a módosított Python kódokat a Lambdára.
+                    </p>
+                </div>
+            </details>
         </div>
     </div>
-
+    <!-- footer -->
     <footer>
         <div class="footer-actions">
             <a href="mailto:loczilaci0121@gmail.com" class="btn">

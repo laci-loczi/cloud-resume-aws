@@ -1,16 +1,17 @@
+<!-- exactly the same as index.html, but english -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lóczi László - Cloud & DevOps Engineer</title>
+    <title>László Lóczi | CS Engineering Student</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/features.css">
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="tsparticles"></div>
@@ -44,11 +45,10 @@
                 
             </div>
         </div>
-
         <div class="grid-container">
             <div class="card">
                 <h3><i class="fas fa-user-graduate"></i> About Me</h3>
-                <p>Graduating in Jan 2027 from BME VIK (Smart Networks Specialization).</p>
+                <p>Graduating in 2027 from BME VIK, specializing in Smart Networks.</p>
             </div>
             <div class="card">
                 <h3><i class="fab fa-aws"></i> Cloud & DevOps</h3>
@@ -58,37 +58,252 @@
                     <li>CI/CD (GitHub Actions)</li>
                 </ul>
             </div>
+            <div class="card" style="grid-column: span 2; display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-chart-line"></i> System Latency Monitor</h3>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 0.8rem; color: #22c55e; background: rgba(34, 197, 94, 0.1); padding: 5px 10px; border-radius: 20px;">
+                            ● Live Data
+                        </span>
+                        <button onclick="toggleFlip()" id="btn-info" style="background: transparent; border: 1px solid #334155; color: #38bdf8; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: all 0.3s; z-index: 50;">
+                            <i class="fas fa-info"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flip-scene" style="position: relative; width: 100%; height: 320px; perspective: 1000px;">                
+                    <div id="flip-wrapper" class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div style="position: relative; height: 100%; width: 100%;">
+                                <canvas id="uptimeChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="blueprint-grid">                                
+                                <div class="bp-node" style="grid-area: clock;">
+                                    <i class="fas fa-clock bp-icon"></i>
+                                    <div class="bp-label">EventBridge</div>
+                                    <div class="bp-sub">Cron: 20m</div>
+                                    <div class="bp-tooltip">
+                                        Automatically wakes up the system every 20 minutes.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical" style="grid-area: w1;">
+                                    <div class="bp-electron"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: writer;">
+                                    <i class="fab fa-aws bp-icon"></i>
+                                    <div class="bp-label">Lambda (W)</div>
+                                    <div class="bp-sub">Python</div>
+                                    <div class="bp-tooltip">
+                                        Measures latency and saves it to the database.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical" style="grid-area: w2;">
+                                    <div class="bp-electron delay-1"></div>
+                                </div>
+
+                                <div class="bp-node db-node" style="grid-area: db;">
+                                    <i class="fas fa-database bp-icon"></i>
+                                    <div class="bp-label">DynamoDB</div>
+                                    <div class="bp-sub">TTL Enabled</div>
+                                    <div class="bp-tooltip">
+                                        NoSQL database. Old data is automatically deleted after 24 hours.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical reverse" style="grid-area: w3;">
+                                    <div class="bp-electron delay-2"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: reader;">
+                                    <i class="fab fa-aws bp-icon"></i>
+                                    <div class="bp-label">Lambda (R)</div>
+                                    <div class="bp-sub">API Handler</div>
+                                    <div class="bp-tooltip">
+                                        Reads and averages data for the Frontend.
+                                    </div>
+                                </div>
+
+                                <div class="bp-wire vertical reverse" style="grid-area: w4;">
+                                    <div class="bp-electron delay-3"></div>
+                                </div>
+
+                                <div class="bp-node" style="grid-area: api;">
+                                    <i class="fas fa-globe bp-icon"></i>
+                                    <div class="bp-label">Frontend</div>
+                                    <div class="bp-sub">Chart.js</div>
+                                    <div class="bp-tooltip">
+                                        Renders the chart to visualize the data.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <div class="modal-overlay" id="archModal">
         <div class="modal-content">
             <button class="close-btn" onclick="toggleModal()">&times;</button>
-            <h2 style="text-align: center; margin-bottom: 20px;">How this site works?</h2>
             
-            <div class="diagram">
-                
-                <div class="node" style="border-color: #fff;">
-                    <i class="fas fa-user" style="color: #fff;"></i> <strong>Visitor</strong>
-                </div>
-                <div class="arrow-down"></div>
-                <div class="diagram-row">
-                    <div class="node"><i class="fas fa-cloud"></i> <strong>CloudFront</strong> <small>CDN & HTTPS</small></div>
-                    <div class="node"><i class="fab fa-aws"></i> <strong>S3 Bucket</strong> <small>Static HTML/CSS</small></div>
-                </div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fas fa-door-open"></i> <strong>API Gateway</strong> <small>REST API Endpoint</small></div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fab fa-python"></i> <strong>AWS Lambda</strong> <small>Python Code</small></div>
-                <div class="arrow-down"></div>
-                <div class="node"><i class="fas fa-database"></i> <strong>DynamoDB</strong> <small>NoSQL Database</small></div>
+            <div style="text-align: left; border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #fff;">System Architecture</h2>
             </div>
-            <p style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: var(--text-secondary);">
-                Infrastructure is 100% Serverless, hosted on AWS, and deployed via <strong>GitHub Actions</strong>.
-            </p>
+            
+            <div class="infra-map">
+                
+                <div class="zone" style="border-color: #38bdf8;">
+                    <div class="zone-label" style="color: #38bdf8;">CLIENT & EDGE</div>
+                    
+                    <div class="infra-row">
+                        <div class="tech-node">
+                            <i class="fas fa-laptop" style="color: #fff;"></i>
+                            <span>Visitor</span>
+                        </div>
+                        
+                        <div class="conn-line">
+                            <span class="conn-label">HTTPS</span>
+                            <div class="conn-arrow"></div>
+                        </div>
+
+                        <div class="tech-node">
+                            <i class="fas fa-globe-americas" style="color: #d946ef;"></i>
+                            <span>CloudFront</span>
+                            <small>Global CDN</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; margin: -10px 0;">
+                    <i class="fas fa-link" style="color: #475569; transform: rotate(90deg);"></i>
+                </div>
+
+                <div class="zone" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.02);">
+                    <div class="zone-label" style="color: #f59e0b;">AWS CLOUD (eu-north-1)</div>
+                    
+                    <div class="cloud-grid">
+                        
+                        <div class="cloud-group">
+                            <div class="group-title">FRONTEND & TRIGGERS</div>
+                            
+                            <div class="tech-node flat" style="margin-bottom: 20px;">
+                                <i class="fab fa-aws" style="color: #eab308;"></i>
+                                <div>
+                                    <strong>S3 Bucket</strong><br>
+                                    <small>Static Assets</small>
+                                </div>
+                            </div>
+
+                            <div class="tech-node flat" style="border-color: #ec4899;">
+                                <i class="fas fa-clock" style="color: #ec4899;"></i>
+                                <div>
+                                    <strong>EventBridge</strong><br>
+                                    <small>Cron (20 min)</small>
+                                </div>
+                            </div>
+                            <div style="text-align: center; color: #64748b; font-size: 0.7rem; margin-top: 5px;">
+                                &darr; Triggers Lambda
+                            </div>
+                        </div>
+
+                        <div class="cloud-group">
+                            <div class="group-title">BACKEND LOGIC</div>
+                            
+                            <div class="tech-node flat">
+                                <i class="fas fa-door-open" style="color: #8b5cf6;"></i>
+                                <div>
+                                    <strong>API Gateway</strong><br>
+                                    <small>HTTP API</small>
+                                </div>
+                            </div>
+                            
+                            <div class="v-line"></div>
+
+                            <div class="tech-node flat" style="border: 1px solid #38bdf8; box-shadow: 0 0 10px rgba(56,189,248,0.1);">
+                                <i class="fab fa-python" style="color: #38bdf8;"></i>
+                                <div>
+                                    <strong>Lambda Function</strong><br>
+                                    <small>Python 3.13</small>
+                                </div>
+                            </div>
+
+                            <div class="v-line"></div>
+
+                            <div class="tech-node flat">
+                                <i class="fas fa-database" style="color: #22c55e;"></i>
+                                <div>
+                                    <strong>DynamoDB</strong><br>
+                                    <small>NoSQL + TTL</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="devops-bar">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: bold; color: #fff;">CI/CD:</span>
+                        <span class="pill"><i class="fab fa-git-alt"></i> Push</span>
+                        <span class="arrow">&rarr;</span>
+                        <span class="pill"><i class="fas fa-robot"></i> GitHub Actions</span>
+                        <span class="arrow">&rarr;</span>
+                        <span class="pill"><i class="fas fa-sync"></i> Deploy to AWS</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <details class="tech-docs">
+                <summary>
+                    <i class="fas fa-book"></i> Detailed Technical Documentation
+                    <span class="dropdown-icon">▼</span>
+                </summary>
+                
+                <div class="docs-body">
+                    <h3>1. Frontend & Delivery</h3>
+                    <p>
+                        The website consists of static HTML, CSS, and JavaScript files hosted on <strong>Amazon S3</strong> (Simple Storage Service). 
+                        Content is cached and delivered via <strong>Amazon CloudFront</strong> (CDN) for low-latency global access. Secure connection (HTTPS) is managed by AWS Certificate Manager (ACM).
+                    </p>
+
+                    <h3>2. Backend API & Logic</h3>
+                    <p>
+                        The architecture is fully serverless. All requests are routed through a <strong>HTTP API Gateway</strong>, which scales automatically.
+                        Behind the API endpoints, <strong>AWS Lambda</strong> functions execute the business logic in a Python 3.13 runtime. These functions only run when triggered.
+                    </p>
+
+                    <h3>3. Database & State Management</h3>
+                    <p>
+                        Data persistence is handled by <strong>Amazon DynamoDB</strong> (NoSQL). Two main tables are utilized:
+                    </p>
+                    <ul>
+                        <li><strong>VisitorCount:</strong> Uses atomic counters to increment page views accurately, preventing write conflicts during high traffic.</li>
+                        <li><strong>UptimeLogs:</strong> Stores latency metrics. <strong>TTL (Time-To-Live)</strong> is enabled on this table to automatically expire and delete records older than 24 hours.</li>
+                    </ul>
+
+                    <h3>4. Automated Monitoring</h3>
+                    <p>
+                        The core of the monitoring system is <strong>Amazon EventBridge</strong>. It acts as a scheduler, triggering the Monitoring Lambda function every 20 minutes.
+                        This function sends HTTP requests to external services, measures latency, and writes logs to DynamoDB.
+                        The Frontend fetches this fresh data via the "Reader" Lambda and renders the real-time chart using Chart.js.
+                    </p>
+
+                    <h3>5. CI/CD Pipeline (DevOps)</h3>
+                    <p>
+                        Upon pushing code to the GitHub repository, a <strong>GitHub Actions</strong> workflow is triggered.
+                        This pipeline automatically syncs new HTML/CSS files to S3 and deploys updated Python code to AWS Lambda functions, ensuring zero-downtime updates.
+                    </p>
+                </div>
+            </details>
         </div>
     </div>
-
+    
     <footer>
         <div class="footer-actions">
             <a href="mailto:loczilaci0121@gmail.com" class="btn">
@@ -100,10 +315,10 @@
             </a>
         </div>
 
-        <p>&copy; 2026 Lóczi László | Hosted on AWS Cloud</p>
+        <p>&copy; 2026 László Lóczi | Hosted on AWS Cloud</p>
     </footer>
 
     <script src="js/main.js"></script>
-
+    
 </body>
 </html>
