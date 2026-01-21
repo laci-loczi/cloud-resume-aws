@@ -11,13 +11,17 @@
 /* base font, background, page centered etc. */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
+    /* Ezt a változót fogja a JS felülírni */
+    background-color: var(--bg-color); 
     color: var(--text-primary);
     margin: 0; padding: 0;
     line-height: 1.6;
     min-height: 100vh;
     display: flex; flex-direction: column; align-items: center;
     position: relative; z-index: 1;
+
+    /* KRITIKUS: Lágy átmenet a színek között */
+    transition: background-color 1.5s ease-in-out; 
 }
 
 /* background particle animation */

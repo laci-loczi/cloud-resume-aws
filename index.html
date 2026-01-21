@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <!---->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lóczi László | Mérnökinformatikus hallgató</title>
@@ -31,6 +30,23 @@
             <span id="counter">Loading...</span> Visitors
         </div>
     </header>
+    <!-- weather options -->
+    <div class="weather-box">
+        <div class="weather-selector">
+            <i class="fas fa-cloud-sun" id="weather-icon"></i>
+            <select id="city-select">
+                <option value="Budapest">Budapest</option>
+                <option value="Stockholm" selected>Stockholm (AWS)</option>
+                <option value="London">London</option>
+                <option value="Dubai">Dubai</option>
+                <option value="Reykjavik">Reykjavík</option>
+                <option value="Landerneau">Landerneau</option>
+                <option value="Donnacona">Donnacona</option> 
+                <option value="Sharurah">Sharurah</option>             
+            </select>
+            <span id="temp-display">--°C</span>
+        </div>
+    </div>  
 
     <main>
         <div class="hero">
