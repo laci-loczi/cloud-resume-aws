@@ -256,21 +256,40 @@ async function updateWeatherTheme(city) {
         // default bacgkorund
         document.body.style.backgroundColor = colors.default;
 
-        // storm, rain
         if (weather === 'Rain' || weather === 'Drizzle' || weather === 'Thunderstorm') {
             document.body.style.backgroundColor = colors.rain;
-            container.options.particles.number.value = 200;
-            container.options.particles.shape.type = "line";
-            container.options.particles.size.value = { min: 1, max: 2 };
-            container.options.particles.move.speed = 25;
+
+            container.options.particles.number.value = 50; 
+            container.options.particles.shape.type = "char"; 
+            container.options.particles.shape.character = {
+                value: ["1" , "0"], 
+                font: "Font Awesome 6 Free", 
+                style: "", 
+            };
+            
+            container.options.particles.color.value = "#38bdf8";
+
+            container.options.particles.size.value = { min: 8, max: 16 };
+            
+            container.options.particles.move.speed = { min: 10, max: 15 }; 
             container.options.particles.move.direction = "bottom";
             container.options.particles.move.straight = true;
             container.options.particles.links.enable = false;
 
+            container.options.particles.rotate = {
+                value: { min: 0, max: 360 },
+                animation: { enable: true, speed: 1, sync: false }
+            };
+
+            container.options.particles.opacity = {
+                value: { min: 0.1, max: 0.8 },
+                animation: { enable: true, speed: 1, sync: false, minimumValue: 0.1 }
+            };
+
             if (weather === 'Thunderstorm') {
                 triggerLightningEffect(container);
             }
-        } 
+        }
         // snowing
         else if (weather === 'Snow') {
             document.body.style.backgroundColor = colors.snow;
