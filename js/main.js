@@ -208,13 +208,18 @@ if (citySelect) {
 }
 
 /* weather theme switching */
-async function updateWeatherTheme(city) {
+async function updateWeatherTheme(selection) {
     try {
-        const response = await fetch(`${WEATHER_API_URL}?city=${city}`);
-        const data = await response.json();
-        if (data.error) throw new Error(data.error);
+        let data;
 
-        // tempature ui reset
+        if (selection.startsWith('SIM_')) {
+            data = getSimulationData(selection);
+        } else {
+            const response = await fetch(`${WEATHER_API_URL}?city=${selection}`);
+            data = await response.json();
+            if (data.error) throw new Error(data.error);
+        }
+
         const tempDisplay = document.getElementById('temp-display');
         if (tempDisplay) {
             tempDisplay.innerText = `${Math.round(data.temp)}°C`;
@@ -226,12 +231,12 @@ async function updateWeatherTheme(city) {
 
         const weather = data.weather;
         const temp = data.temp;
-
+ 
         // default colors
         const colors = {
             default: "#0f172a",
             rain: "#0b0e14",
-            snow: "#6a90af",
+            snow: "#4c7394",
             freezing: "#050a14",
             hot: "#1a0d0d"
         };
@@ -293,6 +298,7 @@ async function updateWeatherTheme(city) {
         // snowing
         else if (weather === 'Snow') {
             document.body.style.backgroundColor = colors.snow;
+
             container.options.particles.number.value = 150;
             container.options.particles.color.value = "#ffffff";
             container.options.particles.shape.type = "circle";
@@ -300,33 +306,92 @@ async function updateWeatherTheme(city) {
             container.options.particles.move.speed = 1.2;
             container.options.particles.move.direction = "bottom";
             container.options.particles.links.enable = false;
+            container.options.particles.links.color = "#ffffff";
             if (container.options.particles.wobble) container.options.particles.wobble.enable = true;
         }
+        
         // very cold
         else if (temp <= 0) {
             document.body.style.backgroundColor = colors.freezing;
-            container.options.particles.color.value = "#e0f2fe";
-            container.options.particles.links.color = "#e0f2fe";
+
+            container.options.particles.color.value = ["#caf0f8", "#00b4d8", "#ffffff"];
+            container.options.particles.shape.type = "star";
+            container.options.particles.shape.options = {
+                star: {
+                    sides: 8,
+                    inset: 2 
+                }
+            };
+
+            container.options.particles.number.value = 120;
+            container.options.particles.size.value = { min: 1, max: 4 };
             container.options.particles.move.speed = 0.2;
-            container.options.particles.shadow.enable = true;
-            container.options.particles.shadow.color = "#38bdf8";
-            container.options.particles.shadow.blur = 15;
+            container.options.particles.move.direction = "left";
+            container.options.particles.move.straight = true;
+            container.options.particles.opacity = {
+                value: { min: 0.1, max: 1 },
+                animation: {
+                    enable: true,
+                    speed: 5,
+                    sync: false, 
+                    startValue: "random",
+                    destroy: "none"
+                }
+            };
+
+            container.options.particles.links.enable = false;
             if (tempDisplay) tempDisplay.classList.add('frozen-temp');
         }
         // very hot
         else if (temp >= 30) {
             document.body.style.backgroundColor = colors.hot;
-            container.options.particles.color.value = "#ef4444";
-            container.options.particles.links.color = "#f97316";
-            container.options.particles.move.speed = 4;
+            
+            container.options.particles.color.value = ["#fbbf24", "#ef4444", "#f97316"];         
+            container.options.particles.number.value = 100;
+            container.options.particles.size.value = { min: 2, max: 5 };          
+            container.options.particles.move.direction = "top";
+            container.options.particles.move.speed = 3; 
+            container.options.particles.move.straight = false;
+            
+            container.options.particles.wobble = {
+                enable: true,
+                distance: 10,
+                speed: 10
+            };
+
+            container.options.particles.opacity = {
+                value: { min: 0.4, max: 0.8 },
+                animation: {
+                    enable: true,
+                    speed: 1,
+                    sync: false,
+                    mode: "auto"
+                }
+            };
+            
+            container.options.particles.links.color = "#ef4444";
+            container.options.particles.links.enable = false;
             if (tempDisplay) tempDisplay.classList.add('hot-temp');
         }
-
+        
         // updating
         await container.refresh();
 
     } catch (err) {
         console.error("Weather theme error:", err);
+    }
+}
+
+//manual input weather
+function getSimulationData(code) {
+    switch(code) {
+        case 'SIM_CLEAR': return { weather: 'Clear', temp: 22 };
+        case 'SIM_RAIN':  return { weather: 'Rain', temp: 15 };
+        case 'SIM_SNOW':  return { weather: 'Snow', temp: -2 };
+        case 'SIM_STORM': return { weather: 'Thunderstorm', temp: 18 };
+        case 'SIM_COLD':  return { weather: 'Clear', temp: -10 }; 
+        case 'SIM_HOT':   return { weather: 'Clear', temp: 35 };  
+        default:          return { weather: 'Clear', temp: 20 };
     }
 }
 
