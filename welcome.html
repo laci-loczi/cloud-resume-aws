@@ -3,54 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lóczi László | Portfolio Portal</title>
+    <title>Lóczi László | Portfolio Welcome Page </title>
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.loczidity.me/welcome.html">
     <meta property="og:title" content="Üdvözöllek | Lóczi László Portfólió">
-
     <meta property="og:image" content="https://www.loczidity.me/images/cloud.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
     <link rel="icon" type="image/svg+xml" href="favicon_welcome.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/modal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/features.css">
-    <link rel="stylesheet" href="css/weather.css">
+    <link rel="stylesheet" href="css/welcome.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
 
 </head>
-<body class="welcome-page">
+    <body>
 
-    <div class="loader-overlay" id="loader">
-        <div class="loader-text">> ESTABLISHING_CONNECTION...</div>
-        <div class="progress-bar">
-            <div class="progress-fill" id="prog-fill"></div>
+        <div id="tsparticles"></div>
+
+        <div class="welcome-container">
+            
+            <div style="margin-bottom: 25px;">
+                <div style="width: 60px; height: 60px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-cloud" style="color: var(--accent); font-size: 24px;"></i>
+                </div>
+            </div>
+
+            <h1>Lóczi László</h1>
+            <p class="subtitle">Computer Engineer Student Portfolio</p>
+
+            <div class="lang-options">
+                
+                <a href="index.html" class="lang-card">
+                    <img src="https://flagcdn.com/w80/hu.png" alt="HU" class="flag">
+                    <div class="card-info">
+                        <span class="lang-title">Magyar</span>
+                        <span class="lang-desc">Portfólió megtekintése</span>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+
+                <a href="index_en.html" class="lang-card">
+                    <img src="https://flagcdn.com/w80/gb.png" alt="EN" class="flag">
+                    <div class="card-info">
+                        <span class="lang-title">English</span>
+                        <span class="lang-desc">View Portfolio</span>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+
+            </div>
         </div>
-    </div>
 
-    <h1 class="welcome-title">> Select a region</h1>
+        <!-- particle logic in the back -->
+        <script>
+            tsParticles.load("tsparticles", {
+                background: { color: { value: "transparent" } },
+                fpsLimit: 60,
+                particles: {
+                    color: { value: "#38bdf8" }, 
+                    links: {
+                        color: "#334155",
+                        distance: 150,
+                        enable: true,
+                        opacity: 0.3,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 0.8,
+                        direction: "none",
+                        random: false,
+                        straight: false,
+                        outModes: { default: "bounce" }
+                    },
+                    number: {
+                        density: { enable: true, area: 800 },
+                        value: 40 
+                    },
+                    opacity: { value: 0.3 },
+                    shape: { type: "circle" },
+                    size: { value: { min: 1, max: 2 } }
+                },
+                detectRetina: true
+            });
+        </script>
 
-    <div class="welcome-container" id="main-container">
-        
-        <a href="index.html" class="route-card" onclick="startSession(event, 'hu', 'index.html')">
-            <img src="https://flagcdn.com/w160/hu.png" alt="Hungary Flag" class="flag">
-            <span class="region-code">Magyar nyelvű oldal</span>
-        </a>
-
-        <a href="index_en.html" class="route-card" onclick="startSession(event, 'en', 'index_en.html')">
-            <img src="https://flagcdn.com/w160/gb.png" alt="UK Flag" class="flag">
-            <span class="region-code">English page</span>
-        </a>
-
-    </div>
-
-    <script src="js/main.js"></script>
-
-</body>
+    </body>
 </html>

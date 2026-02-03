@@ -1,0 +1,123 @@
+:root {
+    --bg-color: #0f172a;     
+    --card-bg: #1e293b;      
+    --text-primary: #f8fafc;  
+    --text-secondary: #94a3b8; 
+    --accent: #38bdf8;        
+    --border: #334155;        
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* particles in the background */
+#tsparticles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* main container */
+.welcome-container {
+    text-align: center;
+    z-index: 10;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    animation: fadeIn 0.8s ease-out;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+p.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+}
+
+/* cards */
+.lang-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lang-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.lang-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    background-color: #253146;
+}
+
+.flag {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.card-info {
+    text-align: left;
+}
+
+.lang-title {
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+}
+
+.lang-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.arrow-icon {
+    margin-left: auto;
+    color: var(--text-secondary);
+    transition: transform 0.2s;
+}
+
+.lang-card:hover .arrow-icon {
+    color: var(--accent);
+    transform: translateX(5px);
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
