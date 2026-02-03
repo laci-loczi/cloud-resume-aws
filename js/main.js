@@ -1,10 +1,9 @@
-// api endpoints
+// APIs
 const BASE_API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/default/ResumeCounter"; 
 const STATUS_API_URL = "https://l7cncxdfwh.execute-api.eu-north-1.amazonaws.com/default/PortfolioStatusAPI";
-const ARCH_API_URL = "https://6er0sghd22.execute-api.eu-north-1.amazonaws.com/default/PortfolioArchStats";
 const WEATHER_API_URL = "https://kx2f67wdlu4tzvlpxl6mkny6wa0bcwnv.lambda-url.eu-north-1.on.aws/";
-// welcome page logic
-// language selection, triggers loading animation, goes to the main site
+
+// welome logic
 function startSession(event, lang, url) {
     event.preventDefault();
     sessionStorage.setItem('lang_pref', lang);
@@ -12,14 +11,12 @@ function startSession(event, lang, url) {
     const loaderText = document.querySelector('.loader-text');
     if (!loaderText) return;
 
-    // loading text based on selected language
     if (lang === 'hu') {
         loaderText.innerText = "> KAPCSOLAT_LÉTESÍTÉSE...";
     } else {
         loaderText.innerText = "> ESTABLISHING_CONNECTION...";
     }
 
-    // progress bar visual
     document.getElementById('main-container').classList.add('fading');
     const loader = document.getElementById('loader');
     loader.classList.add('active');
@@ -29,14 +26,12 @@ function startSession(event, lang, url) {
         if (progFill) progFill.style.width = "100%";
     }, 100);
 
-    // redirect after animation
     setTimeout(() => {
         window.location.href = url;
     }, 1200);
 }
 
-// particles logic
-// background particle network effect init
+// particles init logic
 (async () => {
     await tsParticles.load("tsparticles", {
         particles: {
@@ -55,9 +50,11 @@ function startSession(event, lang, url) {
     });
 })();
 
-// visitor logic
+// visitor counter logic
 document.addEventListener("DOMContentLoaded", () => {
     const counterElement = document.getElementById('counter');
+    if(!counterElement) return; 
+
     const hasVisited = sessionStorage.getItem('visited');
     let finalUrl = BASE_API_URL;
 
@@ -88,14 +85,13 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// monitoring logic
+// chart logic
 document.addEventListener("DOMContentLoaded", () => {
     if(document.getElementById('uptimeChart')) {
         loadStatusData();
     }
 });
 
-// last 24 logs and averages
 function loadStatusData() {
     fetch(STATUS_API_URL)
         .then(res => res.json())
@@ -105,23 +101,18 @@ function loadStatusData() {
         .catch(err => console.error("Status load failed", err));
 }
 
-// multi-line chart using Chart.js and the api data
 function renderChart(apiData) {
     const ctx = document.getElementById('uptimeChart').getContext('2d');
     
-    // checking if data is available before render
     if (!apiData['Google'] || !apiData['Google'].data || apiData['Google'].data.length === 0) {
-        console.log("Waiting for data...");
         return;
     }
 
-    // formatting timestamps
     const labels = apiData['Google'].data.map(item => {
         const date = new Date(item.t * 1000);
         return date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes();
     });
 
-    // creating chart with the api data 
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -152,14 +143,6 @@ function renderChart(apiData) {
                     borderWidth: 2,
                     tension: 0.4,
                     pointRadius: 0
-                },
-                {
-                    label: `444 (Avg: ${apiData['444'] ? apiData['444'].average : 0}ms)`,
-                    data: apiData['444'] ? apiData['444'].data.map(i => i.y) : [],
-                    borderColor: '#ffff00',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    pointRadius: 0
                 }
             ]
         },
@@ -183,14 +166,12 @@ function renderChart(apiData) {
     });
 }
 
-// 3d flip logic
 function toggleFlip() {
     const wrapper = document.getElementById('flip-wrapper');
     const btn = document.getElementById('btn-info');
     
     wrapper.classList.toggle('is-flipped');
     
-    // info or 'x' icon
     if (wrapper.classList.contains('is-flipped')) {
         btn.innerHTML = '<i class="fas fa-times"></i>';
         btn.style.borderColor = '#ef4444';
@@ -202,12 +183,19 @@ function toggleFlip() {
     }
 }
 
-const citySelect = document.getElementById('city-select');
-if (citySelect) {
-    citySelect.addEventListener('change', (e) => updateWeatherTheme(e.target.value));
+// weather logic
+function getSimulationData(code) {
+    switch(code) {
+        case 'SIM_CLEAR': return { weather: 'Clear', temp: 22 };
+        case 'SIM_RAIN':  return { weather: 'Rain', temp: 15 };
+        case 'SIM_SNOW':  return { weather: 'Snow', temp: -2 };
+        case 'SIM_STORM': return { weather: 'Thunderstorm', temp: 18 };
+        case 'SIM_COLD':  return { weather: 'Clear', temp: -10 }; 
+        case 'SIM_HOT':   return { weather: 'Clear', temp: 35 };  
+        default:          return { weather: 'Clear', temp: 20 };
+    }
 }
 
-/* weather theme switching */
 async function updateWeatherTheme(selection) {
     try {
         let data;
@@ -231,8 +219,7 @@ async function updateWeatherTheme(selection) {
 
         const weather = data.weather;
         const temp = data.temp;
- 
-        // default colors
+
         const colors = {
             default: "#0f172a",
             rain: "#0b0e14",
@@ -241,7 +228,6 @@ async function updateWeatherTheme(selection) {
             hot: "#1a0d0d"
         };
 
-        // particles to default position
         container.options.particles.color.value = "#38bdf8";
         container.options.particles.links.enable = true;
         container.options.particles.links.color = "#38bdf8";
@@ -252,53 +238,32 @@ async function updateWeatherTheme(selection) {
         container.options.particles.move.direction = "none";
         container.options.particles.move.straight = false;
         container.options.particles.shape.type = "circle";
-        container.options.particles.shadow.enable = false;
-        
-        // extra effects off, if they were on before
-        if (container.options.particles.move.trail) container.options.particles.move.trail.enable = false;
+        container.options.particles.shape.character = {}; 
+        container.options.particles.rotate = { value: 0, animation: { enable: false } }; 
+
         if (container.options.particles.wobble) container.options.particles.wobble.enable = false;
 
-        // default bacgkorund
         document.body.style.backgroundColor = colors.default;
 
         if (weather === 'Rain' || weather === 'Drizzle' || weather === 'Thunderstorm') {
             document.body.style.backgroundColor = colors.rain;
-
-            container.options.particles.number.value = 50; 
+            container.options.particles.number.value = 80; 
             container.options.particles.shape.type = "char"; 
             container.options.particles.shape.character = {
-                value: ["1" , "0"], 
-                font: "Font Awesome 6 Free", 
+                value: ["|", "💧"], 
+                font: "Verdana", 
                 style: "", 
+                weight: "400"
             };
-            
             container.options.particles.color.value = "#38bdf8";
-
-            container.options.particles.size.value = { min: 8, max: 16 };
-            
+            container.options.particles.size.value = { min: 4, max: 8 };
             container.options.particles.move.speed = { min: 10, max: 15 }; 
             container.options.particles.move.direction = "bottom";
             container.options.particles.move.straight = true;
             container.options.particles.links.enable = false;
-
-            container.options.particles.rotate = {
-                value: { min: 0, max: 360 },
-                animation: { enable: true, speed: 1, sync: false }
-            };
-
-            container.options.particles.opacity = {
-                value: { min: 0.1, max: 0.8 },
-                animation: { enable: true, speed: 1, sync: false, minimumValue: 0.1 }
-            };
-
-            if (weather === 'Thunderstorm') {
-                triggerLightningEffect(container);
-            }
         }
-        // snowing
         else if (weather === 'Snow') {
             document.body.style.backgroundColor = colors.snow;
-
             container.options.particles.number.value = 150;
             container.options.particles.color.value = "#ffffff";
             container.options.particles.shape.type = "circle";
@@ -306,75 +271,25 @@ async function updateWeatherTheme(selection) {
             container.options.particles.move.speed = 1.2;
             container.options.particles.move.direction = "bottom";
             container.options.particles.links.enable = false;
-            container.options.particles.links.color = "#ffffff";
             if (container.options.particles.wobble) container.options.particles.wobble.enable = true;
         }
-        
-        // very cold
         else if (temp <= 0) {
             document.body.style.backgroundColor = colors.freezing;
-
             container.options.particles.color.value = ["#caf0f8", "#00b4d8", "#ffffff"];
-            container.options.particles.shape.type = "star";
-            container.options.particles.shape.options = {
-                star: {
-                    sides: 8,
-                    inset: 2 
-                }
-            };
-
-            container.options.particles.number.value = 120;
-            container.options.particles.size.value = { min: 1, max: 4 };
-            container.options.particles.move.speed = 0.2;
-            container.options.particles.move.direction = "left";
-            container.options.particles.move.straight = true;
-            container.options.particles.opacity = {
-                value: { min: 0.1, max: 1 },
-                animation: {
-                    enable: true,
-                    speed: 5,
-                    sync: false, 
-                    startValue: "random",
-                    destroy: "none"
-                }
-            };
-
-            container.options.particles.links.enable = false;
+            container.options.particles.number.value = 100;
+            container.options.particles.move.speed = 0.5;
+            container.options.particles.links.enable = true;
             if (tempDisplay) tempDisplay.classList.add('frozen-temp');
         }
-        // very hot
         else if (temp >= 30) {
             document.body.style.backgroundColor = colors.hot;
-            
-            container.options.particles.color.value = ["#fbbf24", "#ef4444", "#f97316"];         
-            container.options.particles.number.value = 100;
-            container.options.particles.size.value = { min: 2, max: 5 };          
+            container.options.particles.color.value = ["#fbbf24", "#ef4444"];         
             container.options.particles.move.direction = "top";
             container.options.particles.move.speed = 3; 
-            container.options.particles.move.straight = false;
-            
-            container.options.particles.wobble = {
-                enable: true,
-                distance: 10,
-                speed: 10
-            };
-
-            container.options.particles.opacity = {
-                value: { min: 0.4, max: 0.8 },
-                animation: {
-                    enable: true,
-                    speed: 1,
-                    sync: false,
-                    mode: "auto"
-                }
-            };
-            
             container.options.particles.links.color = "#ef4444";
-            container.options.particles.links.enable = false;
             if (tempDisplay) tempDisplay.classList.add('hot-temp');
         }
         
-        // updating
         await container.refresh();
 
     } catch (err) {
@@ -382,44 +297,119 @@ async function updateWeatherTheme(selection) {
     }
 }
 
-//manual input weather
-function getSimulationData(code) {
-    switch(code) {
-        case 'SIM_CLEAR': return { weather: 'Clear', temp: 22 };
-        case 'SIM_RAIN':  return { weather: 'Rain', temp: 15 };
-        case 'SIM_SNOW':  return { weather: 'Snow', temp: -2 };
-        case 'SIM_STORM': return { weather: 'Thunderstorm', temp: 18 };
-        case 'SIM_COLD':  return { weather: 'Clear', temp: -10 }; 
-        case 'SIM_HOT':   return { weather: 'Clear', temp: 35 };  
-        default:          return { weather: 'Clear', temp: 20 };
+
+// ui logic
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const infoBtn = document.getElementById('weather-info-btn');
+    const tooltip = document.getElementById('weather-tooltip');
+    const closeBtn = document.getElementById('tooltip-close');
+
+    if (infoBtn && tooltip) {
+        infoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            tooltip.classList.toggle('active');
+        });
+        if(closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                tooltip.classList.remove('active');
+            });
+        }
+        document.addEventListener('click', (e) => {
+            if (!tooltip.contains(e.target) && e.target !== infoBtn) {
+                tooltip.classList.remove('active');
+            }
+        });
     }
-}
 
-// lightning if thunderstorm
-function triggerLightningEffect(container) {
-    const flash = () => {
-        const canvas = container.canvas.element;
-        if (!canvas) return;
-        
-        canvas.style.transition = "background-color 0.05s";
-        canvas.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
-        
-        setTimeout(() => {
-            canvas.style.backgroundColor = "transparent";
-        }, 80);
-        
-        const currentCity = document.getElementById('city-select').value;
-        setTimeout(() => {
-            if (document.getElementById('city-select').value === currentCity) flash();
-        }, Math.random() * 6000 + 3000);
-    };
-    flash();
-}
+    const citySelect = document.getElementById('city-select');
+    const customUi = document.getElementById('custom-select-ui');
+    const customOptionsContainer = document.getElementById('custom-options');
+    const currentSelectionSpan = customUi.querySelector('.current-selection');
+    const wrapper = document.querySelector('.custom-select-wrapper');
 
-// stockholm from start
-document.addEventListener("DOMContentLoaded", () => {
-    if (document.getElementById('city-select')) {
-        updateWeatherTheme('Stockholm');
+    if (citySelect && customUi) {
+        
+        customOptionsContainer.innerHTML = ''; 
+        Array.from(citySelect.options).forEach(option => {
+            if (!option.value) return; 
+
+            const div = document.createElement('div');
+            div.className = 'custom-option';
+            div.textContent = option.text;
+            div.dataset.value = option.value;
+
+            if (option.value === citySelect.value) {
+                div.classList.add('selected');
+                currentSelectionSpan.textContent = option.text;
+            }
+
+            div.addEventListener('click', () => {
+                citySelect.value = option.value;
+                citySelect.dispatchEvent(new Event('change'));
+                wrapper.classList.remove('open');
+            });
+
+            customOptionsContainer.appendChild(div);
+        });
+
+        customUi.addEventListener('click', (e) => {
+            e.stopPropagation();
+            wrapper.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
+        });
+
+        citySelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            
+            updateWeatherTheme(val);
+
+            const selectedOption = citySelect.options[citySelect.selectedIndex];
+            if(selectedOption) {
+                 currentSelectionSpan.textContent = selectedOption.text;
+                 
+                 document.querySelectorAll('.custom-option').forEach(el => {
+                    el.classList.remove('selected');
+                    if (el.dataset.value === val) el.classList.add('selected');
+                });
+            }
+        });
+
+        updateWeatherTheme(citySelect.value);
+        autoDetectLocation();
     }
 });
 
+// auto detect using ip logic
+async function autoDetectLocation() {
+    try {
+        const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        const data = await response.json();
+        const detectedCity = data.city;
+        console.log(`Detected: ${detectedCity}`);
+
+        const citySelect = document.getElementById('city-select');
+        if (!citySelect) return;
+
+        let exists = false;
+        for (let i = 0; i < citySelect.options.length; i++) {
+            if (citySelect.options[i].value === detectedCity) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (exists && citySelect.value !== detectedCity) {
+            citySelect.value = detectedCity;
+            citySelect.dispatchEvent(new Event('change'));
+            console.log("Auto-switched to detected city.");
+        }
+
+    } catch (error) {
+        console.warn("Auto-detect failed, staying on default.");
+    }
+}

@@ -208,31 +208,3 @@ body:not(.welcome-page)::before { content: ''; position: fixed; top: 0; left: 0;
 body:not(.welcome-page) main, body:not(.welcome-page) header, body:not(.welcome-page) footer { animation: contentZoom 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 @keyframes revealLayer { 0% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
 @keyframes contentZoom { 0% { opacity: 0; transform: scale(1.1); filter: blur(5px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
-
-.weather-box {
-    width: 100%; max-width: 900px; display: flex; justify-content: flex-end;
-    padding: 10px 20px; margin-bottom: -20px; z-index: 100; box-sizing: border-box;
-}
-
-.weather-selector {
-    background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 30px;
-    display: flex; align-items: center; gap: 12px; transition: all 0.3s ease;
-    max-width: 100%;
-}
-
-.weather-selector:hover { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-.weather-selector select { background: transparent; border: none; color: var(--text-primary); font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; font-family: 'Inter', sans-serif; max-width: 150px; text-overflow: ellipsis; }
-#city-select{ background-color: transparent; color: #38bdf8; background: transparent; font-family: 'Inter', sans-serif; }
-#city-select option { background-color: #1e293b; color: #f8fafc; padding: 10px; }
-#temp-display { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-color); background: rgba(56, 189, 248, 0.1); padding: 2px 8px; border-radius: 5px; min-width: 50px; text-align: center; }
-
-@media (max-width: 600px) {
-    .weather-box { justify-content: center; margin-top: 10px; margin-bottom: 0; }
-    .weather-selector { padding: 6px 12px; gap: 8px; }
-}
-
-.frozen-temp { color: #e0f2fe !important; text-shadow: 0 0 8px #38bdf8, 0 0 12px #ffffff; animation: shiver 0.5s infinite alternate; }
-.hot-temp { color: #ef4444 !important; text-shadow: 0 0 8px #f97316; animation: glow-pulse 1s infinite alternate; }
-@keyframes shiver { from { transform: translateX(-1px); } to { transform: translateX(1px); } }
-@keyframes glow-pulse { from { opacity: 0.8; transform: scale(1); } to { opacity: 1; transform: scale(1.1); } }

@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lóczi László | Mérnökinformatikus hallgató</title>
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modal.css">
+    
     <link rel="stylesheet" href="css/features.css">
+    <link rel="stylesheet" href="css/weather.css">
+
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -33,28 +41,54 @@
     <!-- weather options -->
     <div class="weather-box">
         <div class="weather-selector">
-            <i class="fas fa-cloud-sun" id="weather-icon"></i>
-            <select id="city-select">
-                <optgroup label="Valós Időjárás (API)">
-                    <option value="Budapest">Budapest</option>
-                    <option value="Stockholm" selected>Stockholm (AWS)</option>
-                    <option value="London">London</option>
-                    <option value="Dubai">Dubai</option>
-                    <option value="Reykjavik">Reykjavík</option>
-                    <option value="Landerneau">Landerneau</option>
-                    <option value="Donnacona">Donnacona</option> 
-                    <option value="Sharurah">Sharurah</option>     
-                    <option value="Garoua">Garoua</option>
-                </optgroup>
-            </select>
+            <div class="custom-select-wrapper">
+                <i class="fas fa-cloud-sun weather-icon-display" id="weather-icon"></i>
+                
+                <select id="city-select" class="hidden-select">
+                    <optgroup label="Valós Időjárás (API)">
+                        <option value="Budapest">Budapest</option>
+                        <option value="Stockholm" selected>Stockholm</option>
+                        <option value="London">London</option>
+                        <option value="Dubai">Dubai</option>
+                        <option value="Reykjavik">Reykjavík</option>
+                        <option value="Landerneau">Landerneau</option>
+                        <option value="Donnacona">Donnacona</option> 
+                        <option value="Sharurah">Sharurah</option>     
+                        <option value="Garoua">Garoua</option>
+                    </optgroup>
+                </select>
+
+                <div class="custom-select-ui" id="custom-select-ui">
+                    <span class="current-selection">Stockholm</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                
+                <div class="custom-options" id="custom-options">
+                </div>
+            </div>
+
             <span id="temp-display">--°C</span>
+            
+            <button id="weather-info-btn" class="info-btn" aria-label="Információ">
+                <i class="fas fa-info-circle"></i>
+            </button>
         </div>
-    </div>  
+
+        <div id="weather-tooltip" class="weather-tooltip">
+            <div class="tooltip-header">
+                <i class="fas fa-magic"></i> Dinamikus Háttér
+            </div>
+            <p>
+                Ez az oldal valós idejű API adatokkal, a kiválasztott város aktuális időjárása alapján 
+                <strong>automatikusan megváltoztatja a hátteret</strong> (pl. eső, hó, napsütés).
+            </p>
+            <button id="tooltip-close" class="tooltip-close">&times;</button>
+        </div>
+    </div>
 
     <main>
         <div class="hero">
-            <h1>Cloud & DevOps Engineer</h1>
-            <p>BME VIK mérnökinformatikus hallgató.</p>
+            <h2>BME VIK mérnökinformatikus hallgató</h2>
             <div class="hero-actions">
                 
                 <a href="cv.pdf" target="_blank" class="btn">
@@ -71,7 +105,12 @@
         <div class="grid-container">
             <div class="card">
                 <h3><i class="fas fa-user-graduate"></i> Rólam</h3>
-                <p>2027-ben végzem a BME VIK mérnökinformatikus szakán, Intelligens Hálózatok specializáción. </p>
+                <p>2027-ben végzem a BME VIK mérnökinformatikus szakán, Intelligens Hálózatok specializáción. 
+                    <br></br>
+                    Ezt az oldalt <strong>hobbiprojektként</strong> fejlesztem,                   
+                    hogy az egyetemen és a saját magam által szerzett tudásomat ezen a projekten keresztül 
+                    fejlesszem.
+                </p>
             </div>
             <div class="card">
                 <h3><i class="fab fa-aws"></i> Cloud & DevOps</h3>
@@ -271,7 +310,7 @@
                 <i class="fas fa-database" style="color: #22c55e;"></i>
                 <div>
                     <strong>DynamoDB Tables</strong><br>
-                    <small>Storing latency information for 24hours | Storing the website view count</small>
+                    <small>Válaszidő adatok tárolása 24 óráig | Weboldal megtekintések számának tárolása</small>
                 </div>
             </div>
         </div>
