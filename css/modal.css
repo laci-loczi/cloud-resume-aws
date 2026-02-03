@@ -65,4 +65,73 @@
         font-size: 1.2rem; 
         padding-right: 30px; 
     }
+    .backend-grid { grid-template-columns: 1fr; }
 }
+
+
+/* --- Architecture Diagram Styles --- */
+.arch-container {
+    display: flex; flex-direction: column; gap: 20px;
+    background: #0f172a; padding: 10px; border-radius: 8px;
+    user-select: none;
+}
+
+/* Zónák (dobozok) */
+.arch-zone {
+    border: 1px dashed #334155; border-radius: 12px; padding: 15px;
+    position: relative; transition: all 0.3s ease;
+    background: rgba(15, 23, 42, 0.5);
+}
+.arch-zone:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.05); }
+.zone-label {
+    position: absolute; top: -10px; left: 15px; background: #0f172a;
+    padding: 0 10px; font-size: 0.75rem; color: #94a3b8; font-weight: bold; letter-spacing: 1px;
+}
+
+/* Grid Layout a backendhez */
+.backend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Tech Node (Az egyes elemek) */
+.tech-card {
+    background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+    padding: 12px; text-align: center; position: relative;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 80px;
+}
+
+/* Interakció: Ha ráviszed az egeret, emelkedjen ki */
+.tech-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-color: #38bdf8;
+    z-index: 10;
+}
+
+/* Színek a típusokhoz */
+.type-lambda { border-left: 3px solid #f59e0b; } /* Narancs */
+.type-db { border-left: 3px solid #22c55e; }     /* Zöld */
+.type-s3 { border-left: 3px solid #ef4444; }     /* Piros */
+.type-api { border-left: 3px solid #a855f7; }    /* Lila */
+
+.tech-icon { font-size: 1.5rem; margin-bottom: 5px; }
+.tech-name { font-weight: bold; font-size: 0.9rem; color: #e2e8f0; }
+.tech-desc { font-size: 0.75rem; color: #94a3b8; line-height: 1.2; }
+
+/* Animált adatfolyam vonalak (CSS Gradients) */
+.flow-line-vertical {
+    width: 2px; height: 20px; background: #334155; margin: 0 auto;
+    position: relative; overflow: hidden;
+}
+.flow-line-vertical::after {
+    content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, #38bdf8, transparent);
+    animation: flowDown 2s infinite;
+}
+
+@keyframes flowDown { 0% { top: -100%; } 100% { top: 100%; } }
