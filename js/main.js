@@ -247,21 +247,33 @@ async function updateWeatherTheme(selection) {
 
         if (weather === 'Rain' || weather === 'Drizzle' || weather === 'Thunderstorm') {
             document.body.style.backgroundColor = colors.rain;
-            container.options.particles.number.value = 80; 
+
+            container.options.particles.number.value = 50; 
             container.options.particles.shape.type = "char"; 
             container.options.particles.shape.character = {
-                value: ["|", "💧"], 
-                font: "Verdana", 
+                value: ["1" , "0"], 
+                font: "Font Awesome 6 Free", 
                 style: "", 
-                weight: "400"
             };
+
             container.options.particles.color.value = "#38bdf8";
-            container.options.particles.size.value = { min: 4, max: 8 };
+            container.options.particles.size.value = { min: 8, max: 16 };
             container.options.particles.move.speed = { min: 10, max: 15 }; 
             container.options.particles.move.direction = "bottom";
             container.options.particles.move.straight = true;
             container.options.particles.links.enable = false;
+
+            container.options.particles.rotate = {
+                value: { min: 0, max: 360 },
+                animation: { enable: true, speed: 1, sync: false }
+            };
+
+            container.options.particles.opacity = {
+                value: { min: 0.1, max: 0.8 },
+                animation: { enable: true, speed: 1, sync: false, minimumValue: 0.1 }
+            };
         }
+
         else if (weather === 'Snow') {
             document.body.style.backgroundColor = colors.snow;
             container.options.particles.number.value = 150;
@@ -273,20 +285,67 @@ async function updateWeatherTheme(selection) {
             container.options.particles.links.enable = false;
             if (container.options.particles.wobble) container.options.particles.wobble.enable = true;
         }
+
         else if (temp <= 0) {
             document.body.style.backgroundColor = colors.freezing;
+
             container.options.particles.color.value = ["#caf0f8", "#00b4d8", "#ffffff"];
-            container.options.particles.number.value = 100;
-            container.options.particles.move.speed = 0.5;
-            container.options.particles.links.enable = true;
+            container.options.particles.shape.type = "star";
+            container.options.particles.shape.options = {
+                star: {
+                    sides: 8,
+                    inset: 2 
+                }
+            };
+
+            container.options.particles.number.value = 120;
+            container.options.particles.size.value = { min: 1, max: 4 };
+            container.options.particles.move.speed = 0.2;
+            container.options.particles.move.direction = "left";
+            container.options.particles.move.straight = true;
+            container.options.particles.opacity = {
+                value: { min: 0.1, max: 1 },
+                animation: {
+                    enable: true,
+                    speed: 5,
+                    sync: false, 
+                    startValue: "random",
+                    destroy: "none"
+                }
+            };
+
+            container.options.particles.links.enable = false;
             if (tempDisplay) tempDisplay.classList.add('frozen-temp');
         }
+        
         else if (temp >= 30) {
-            document.body.style.backgroundColor = colors.hot;
-            container.options.particles.color.value = ["#fbbf24", "#ef4444"];         
+            document.body.style.backgroundColor = colors.hot;  
+
+            container.options.particles.color.value = ["#fbbf24", "#ef4444", "#f97316"];         
+            container.options.particles.number.value = 100;
+            container.options.particles.size.value = { min: 2, max: 5 };          
             container.options.particles.move.direction = "top";
             container.options.particles.move.speed = 3; 
+            container.options.particles.move.straight = false;
+            
+            container.options.particles.wobble = {
+                enable: true,
+                distance: 10,
+                speed: 10
+            };
+
+            container.options.particles.opacity = {
+                value: { min: 0.4, max: 0.8 },
+                animation: {
+                    enable: true,
+                    speed: 1,
+                    sync: false,
+                    mode: "auto"
+                }
+            };
+            
             container.options.particles.links.color = "#ef4444";
+            container.options.particles.links.enable = false;
             if (tempDisplay) tempDisplay.classList.add('hot-temp');
         }
         
