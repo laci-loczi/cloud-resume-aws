@@ -1,13 +1,15 @@
 /* weather box */
 .weather-box {
-    width: 100%; max-width: 900px; 
+    position: relative; 
+    z-index: 100;      
+    width: 100%; 
+    max-width: 900px; 
     display: flex; 
-    justify-content: flex-end;
+    justify-content: flex-end; 
     padding: 10px 20px; 
     margin-bottom: -20px; 
-    z-index: 100; 
     box-sizing: border-box;
-    position: relative;
+    pointer-events: none;
 }
 
 /* weather selector */
@@ -20,6 +22,10 @@
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
+}
+
+.weather-selector, .weather-tooltip {
+    pointer-events: auto; 
 }
 
 /* info button */
