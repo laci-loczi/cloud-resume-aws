@@ -364,7 +364,7 @@
                         <h3 style="color: #22c55e; border-bottom: 1px solid #334155; padding-bottom: 5px;">3. Válaszidő diagram</h3>
                         <p>Kétlépcsős rendszer:</p>
                         <ul>
-                            <li><strong>Írás (Write):</strong> Az EventBridge 2 óránként elindítja a <strong>PortfolioPinger</strong> Lambdát. Ez "megpingeli" a külső szolgáltatásokat (jelen esetben Google, AWS, GitHub, 444), és az eredményt beírja az <strong>UptimeLogs</strong> táblába.</li>
+                            <li><strong>Írás (Write):</strong> Az EventBridge 20 percenként elindítja a <strong>PortfolioPinger</strong> Lambdát. Ez "megpingeli" a külső szolgáltatásokat (jelen esetben Google, AWS, GitHub, 444), és az eredményt beírja az <strong>UptimeLogs</strong> táblába.</li>
                             <li><strong>Olvasás (Read):</strong> A grafikon kirajzolásához a frontend a <strong>PortfolioStatusAPI</strong> Lambdát hívja, ami kiolvassa az elmúlt 24 óra adatait a DynamoDB-ből.</li>
                         </ul>
                     </div>
@@ -399,6 +399,8 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/weather.js"></script>
     
 </body>
 </html>

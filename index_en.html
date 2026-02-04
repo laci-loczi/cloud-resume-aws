@@ -353,7 +353,7 @@
                         <h3 style="color: #22c55e; border-bottom: 1px solid #334155; padding-bottom: 5px;">3. Latency Chart</h3>
                         <p>Two-stage system:</p>
                         <ul>
-                            <li><strong>Write:</strong> EventBridge triggers the <strong>PortfolioPinger</strong> Lambda every 2 hours. This "pings" external services (in this case Google, AWS, GitHub, 444), and writes the results into the <strong>UptimeLogs</strong> table.</li>
+                            <li><strong>Write:</strong> EventBridge triggers the <strong>PortfolioPinger</strong> Lambda every 20 minutes. This "pings" external services (in this case Google, AWS, GitHub, 444), and writes the results into the <strong>UptimeLogs</strong> table.</li>
                             <li><strong>Read:</strong> To draw the chart, the frontend calls the <strong>PortfolioStatusAPI</strong> Lambda, which reads the last 24 hours of data from DynamoDB.</li>
                         </ul>
                     </div>
@@ -387,6 +387,8 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/weather.js"></script>
     
 </body>
 </html>
