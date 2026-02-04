@@ -54,29 +54,56 @@
     line-height: 1;
 }
 
-/* mobile layout opti */
+/* mobile layout opti */ 
 @media (max-width: 768px) {
-    .modal-content { 
-        width: 95%; 
-        padding: 15px; 
-        margin-top: 10px; 
+
+    .arch-zone[style*="#38bdf8"] > div {
+        flex-direction: column !important;
+        gap: 15px !important;
     }
-    .modal-content h2 { 
-        font-size: 1.2rem; 
-        padding-right: 30px; 
+
+    .arch-zone[style*="#38bdf8"] > div > div[style*="font-size: 1.2rem"] {
+        transform: rotate(90deg); 
+        margin: -5px 0; 
     }
-    .backend-grid { grid-template-columns: 1fr; }
+
+    .backend-grid {
+        display: flex !important; 
+        flex-direction: column !important;
+        gap: 40px !important; 
+    }
+    .backend-grid > div {
+        border-bottom: 1px dashed #334155;
+        padding-bottom: 20px;
+    }
+    .backend-grid > div:last-child {
+        border-bottom: none;
+    }
+
+    .devops-bar {
+        overflow-x: visible !important;
+        white-space: normal !important;
+        height: auto !important;
+    }
+
+    .devops-bar > div {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+    }
+
+    .devops-bar .arrow {
+        display: none; 
+    }
 }
-
-
-/* --- Architecture Diagram Styles --- */
+/* arch container */
 .arch-container {
     display: flex; flex-direction: column; gap: 20px;
     background: #0f172a; padding: 10px; border-radius: 8px;
     user-select: none;
 }
 
-/* Zónák (dobozok) */
+/* boxes */
 .arch-zone {
     border: 1px dashed #334155; border-radius: 12px; padding: 15px;
     position: relative; transition: all 0.3s ease;
@@ -88,7 +115,7 @@
     padding: 0 10px; font-size: 0.75rem; color: #94a3b8; font-weight: bold; letter-spacing: 1px;
 }
 
-/* Grid Layout a backendhez */
+/* grid layout */
 .backend-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -96,7 +123,6 @@
     margin-top: 10px;
 }
 
-/* Tech Node (Az egyes elemek) */
 .tech-card {
     background: #1e293b; border: 1px solid #334155; border-radius: 8px;
     padding: 12px; text-align: center; position: relative;
@@ -105,7 +131,7 @@
     min-height: 80px;
 }
 
-/* Interakció: Ha ráviszed az egeret, emelkedjen ki */
+/* hover */
 .tech-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -113,7 +139,7 @@
     z-index: 10;
 }
 
-/* Színek a típusokhoz */
+/* colors */
 .type-lambda { border-left: 3px solid #f59e0b; } /* Narancs */
 .type-db { border-left: 3px solid #22c55e; }     /* Zöld */
 .type-s3 { border-left: 3px solid #ef4444; }     /* Piros */
@@ -123,7 +149,7 @@
 .tech-name { font-weight: bold; font-size: 0.9rem; color: #e2e8f0; }
 .tech-desc { font-size: 0.75rem; color: #94a3b8; line-height: 1.2; }
 
-/* Animált adatfolyam vonalak (CSS Gradients) */
+/* animation */
 .flow-line-vertical {
     width: 2px; height: 20px; background: #334155; margin: 0 auto;
     position: relative; overflow: hidden;
