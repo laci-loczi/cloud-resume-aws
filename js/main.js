@@ -3,34 +3,6 @@ const BASE_API_URL = "https://uh49oub8hh.execute-api.eu-north-1.amazonaws.com/de
 const STATUS_API_URL = "https://l7cncxdfwh.execute-api.eu-north-1.amazonaws.com/default/PortfolioStatusAPI";
 const WEATHER_API_URL = "https://kx2f67wdlu4tzvlpxl6mkny6wa0bcwnv.lambda-url.eu-north-1.on.aws/";
 
-// welome logic
-function startSession(event, lang, url) {
-    event.preventDefault();
-    sessionStorage.setItem('lang_pref', lang);
-
-    const loaderText = document.querySelector('.loader-text');
-    if (!loaderText) return;
-
-    if (lang === 'hu') {
-        loaderText.innerText = "> KAPCSOLAT_LÉTESÍTÉSE...";
-    } else {
-        loaderText.innerText = "> ESTABLISHING_CONNECTION...";
-    }
-
-    document.getElementById('main-container').classList.add('fading');
-    const loader = document.getElementById('loader');
-    loader.classList.add('active');
-
-    setTimeout(() => {
-        const progFill = document.getElementById('prog-fill');
-        if (progFill) progFill.style.width = "100%";
-    }, 100);
-
-    setTimeout(() => {
-        window.location.href = url;
-    }, 1200);
-}
-
 // particles init logic
 (async () => {
     await tsParticles.load("tsparticles", {
@@ -121,7 +93,7 @@ function renderChart(apiData) {
                 {
                     label: `Google (Avg: ${apiData['Google'].average}ms)`,
                     data: apiData['Google'].data.map(i => i.y),
-                    borderColor: '#38bdf8',
+                    borderColor: '#2340e2',
                     backgroundColor: 'rgba(56, 189, 248, 0.1)',
                     borderWidth: 2,
                     tension: 0.4,
@@ -131,7 +103,7 @@ function renderChart(apiData) {
                 {
                     label: `AWS (Avg: ${apiData['AWS'].average}ms)`,
                     data: apiData['AWS'].data.map(i => i.y),
-                    borderColor: '#f59e0b',
+                    borderColor: '#c76126',
                     borderWidth: 2,
                     tension: 0.4,
                     pointRadius: 0
@@ -140,6 +112,31 @@ function renderChart(apiData) {
                     label: `GitHub (Avg: ${apiData['GitHub'].average}ms)`,
                     data: apiData['GitHub'].data.map(i => i.y),
                     borderColor: '#a855f7',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0
+                
+                },
+                {
+                    label: `BME (Avg: ${apiData['BME'].average}ms)`,
+                    data: apiData['BME'].data.map(i => i.y),
+                    borderColor: '#4b9b26',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0
+                },
+                {
+                    label: `IBM (Avg: ${apiData['IBM'].average}ms)`,
+                    data: apiData['IBM'].data.map(i => i.y),
+                    borderColor: '#01012b',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0
+                },
+                {
+                    label: `NASA (Avg: ${apiData['NASA'].average}ms)`,
+                    data: apiData['NASA'].data.map(i => i.y),
+                    borderColor: '#eb0b0b',
                     borderWidth: 2,
                     tension: 0.4,
                     pointRadius: 0
