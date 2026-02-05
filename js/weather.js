@@ -310,3 +310,28 @@ async function autoDetectLocation() {
         console.warn("Auto-detect failed, staying on default.");
     }
 }
+
+const simWrapper = document.getElementById('sim-wrapper');
+const simTrigger = document.getElementById('sim-trigger');
+
+if (simTrigger) {
+    simTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelector('.custom-select-wrapper.open')?.classList.remove('open');
+
+        simWrapper.classList.toggle('open');
+        
+        const icon = simTrigger.querySelector('i');
+    });
+}
+
+function selectSimulation(simCode) {
+    updateWeatherTheme(simCode);
+    simWrapper.classList.remove('open');
+}
+
+document.addEventListener('click', (e) => {
+    if (simWrapper && !simWrapper.contains(e.target)) {
+        simWrapper.classList.remove('open');
+    }
+});
