@@ -85,148 +85,165 @@
 
 /* mobile blueprint fixes with testing */
 @media (max-width: 600px) {
-    .flip-scene { height: 500px !important; } 
 
-    .blueprint-grid {
-        grid-template-areas: 
-            "clock" "w1" "writer" "w2" "db" "w3" "reader" "w4" "api";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 20px auto 20px auto 20px auto 20px auto;
-        padding: 10px;
-    }
-
-    .bp-wire { height: 100%; width: 2px; margin: 0 auto; }
-    
-    .bp-node { width: 100%; max-width: 200px; display: flex; align-items: center; justify-content: space-between; padding: 5px 15px; flex-direction: row; gap: 10px; text-align: left; }
-    .db-node { width: 100%; max-width: 200px; }
-    
-    .bp-icon { margin-bottom: 0; font-size: 1.2rem; width: 30px; text-align: center; }
-    .bp-label { font-size: 0.8rem; }
-    .bp-sub { display: none; }
-    
-    .bp-tooltip { width: 180px; }
-
-    /* DB -> Reader to go down on mobile stack */
-    .bp-wire.reverse .bp-electron {
-        animation-name: flowDown;
-    }
-
-    .bp-node[style*="api"] .bp-tooltip {
-        bottom: 120%;
-        top: auto;
-    }
-    .bp-node[style*="api"]:hover .bp-tooltip {
-        transform: translateX(-50%) translateY(-5px);
-    }
-}
-
-/* --- JAVÍTOTT MOBIL NÉZET AZ ARCHITEKTÚRÁHOZ --- */
-@media (max-width: 600px) {
-    /* 1. A kártya magasságát hagyjuk automatikusra, hogy kiférjen a tartalom */
     .flip-scene { 
-        height: auto !important; 
-        min-height: 500px; /* Biztonsági minimum */
+        height: 680px; 
+        margin-bottom: 40px;
     } 
 
-    .flip-card-inner, .flip-card-front, .flip-card-back {
-        position: relative; /* Fontos: mobilon ne legyen abszolút, hogy görgethető legyen */
-        height: auto;
-        min-height: 100%;
-    }
-    
-    .flip-card-back {
-        /* Ha kell, adjunk neki fix magasságot, vagy hagyjuk tartalomfüggőre */
-        padding: 20px 10px;
-        overflow-y: auto; /* Ha mégis kilógna */
-    }
-
-    /* 2. A GRID átalakítása teljesen lineáris listává */
-    .blueprint-grid {
-        display: flex; /* Grid helyett Flex */
+    .flip-card-front {
+        display: flex;
         flex-direction: column;
-        gap: 0; /* A hézagokat a wire elemek adják */
-        padding: 10px;
-        width: 100%;
+        justify-content: center;
+        background-color: #1e293b;
     }
 
-    /* 3. A csomópontok (dobozok) stílusa mobilon */
-    .bp-node, .db-node {
+    .flip-card-front canvas {
+        max-height: 250px;
         width: 100%;
-        max-width: 280px; /* Kicsit szélesebb, hogy olvashatóbb legyen */
+        height: auto;
+    }
+
+    .flip-card-back {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 20px 10px;
+        overflow-y: auto;
+    }
+
+    .blueprint-grid {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        gap: 0;
+    }
+
+    .bp-node, .db-node {
+        width: 90%;
+        max-width: none;
+        height: auto;
         margin: 0 auto;
         display: flex;
-        align-items: center;
-        justify-content: flex-start; /* Balra igazítás */
-        padding: 10px 15px;
         flex-direction: row;
-        gap: 15px;
+        align-items: center;
+        justify-content: flex-start;
         text-align: left;
+        padding: 10px 15px;
+        gap: 15px;
     }
 
-    /* 4. Ikonok és szövegek igazítása */
-    .bp-icon { 
-        margin-bottom: 0; 
-        font-size: 1.4rem; 
-        width: 40px; 
+    .bp-icon {
+        margin-bottom: 0;
+        font-size: 1.4rem;
+        width: 30px;
         text-align: center;
-        flex-shrink: 0; /* Ne nyomódjon össze */
+        flex-shrink: 0;
     }
     
-    .bp-label { 
-        font-size: 0.9rem; 
+    .bp-label {
+        font-size: 0.95rem;
         flex-grow: 1;
     }
     
-    /* Mobilon is mutassuk a sub-textet, ha van hely, vagy rejtsük el */
-    .bp-sub { 
-        display: block; 
-        font-size: 0.7rem; 
+    .bp-sub {
+        display: block;
+        font-size: 0.75rem;
         color: #64748b;
         margin-top: 2px;
     }
 
-    /* 5. A vezetékek (wires) átalakítása rövid összekötőkké */
-    .bp-wire { 
-        height: 30px; /* Fix magasság a dobozok között */
-        width: 2px; 
-        margin: 0 auto; 
-        min-height: 0; /* Felülírjuk az asztali min-height-et */
-    }
-    
-    /* Az elektronok animációját egyszerűsítjük (mindig fentről le) */
-    .bp-wire .bp-electron {
-        animation: flowDown 1.5s infinite linear;
-    }
-    .bp-wire.reverse .bp-electron {
-        animation: flowDown 1.5s infinite linear; /* Mobilon minden fentről le folyik */
-        background: #38bdf8; /* Kék marad, ne legyen zöld visszafelé */
-        box-shadow: 0 0 8px #38bdf8;
+    .bp-wire {
+        width: 2px;
+        height: 20px;
+        min-height: 0;
+        margin: 0 auto;
+        flex-shrink: 0;
     }
 
-    /* 6. Tooltip kezelés (hogy ne lógjon ki a képernyőről) */
     .bp-tooltip {
         width: 200px;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 100%; /* Mindig a doboz fölé */
+        bottom: 100%; 
+        top: auto;
         margin-bottom: 10px;
-        z-index: 1000;
-        white-space: normal; /* Sortörés engedélyezése */
+        white-space: normal;
+        pointer-events: none;
+        z-index: 9999;
     }
 
-    /* Különleges tooltip pozíciók felülírása */
-    .bp-node[style*="api"] .bp-tooltip,
-    .bp-node[style*="clock"] .bp-tooltip {
+    .bp-node[style*="api"] .bp-tooltip {
         top: auto;
         bottom: 100%;
     }
+
+    .bp-node[style*="clock"] .bp-tooltip {
+        top: 100%; 
+        bottom: auto;  
+        margin-top: 10px; 
+        margin-bottom: 0;
+        transform: translateX(-50%); 
+    }
+
+    .cloud-grid { 
+        grid-template-columns: 1fr; 
+        gap: 30px; 
+    }
     
-    /* Hover állapot */
-    .bp-node:hover .bp-tooltip {
-        transform: translateX(-50%) translateY(-5px);
+    .infra-row { 
+        flex-direction: column; 
+        gap: 10px; 
+        width: 100%; 
+    }
+
+    .conn-line { 
+        width: 1px; 
+        height: 20px; 
+        min-width: 0; 
+        flex: none; 
+        margin: 5px 0; 
+    }
+    
+    .conn-label {
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        background: #1e293b;
+        white-space: nowrap;
+    }
+    
+    .conn-arrow {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #475569;
+        border-bottom: none;
+        top: auto; right: auto; left: -4px; bottom: 0;
+    }
+
+    .tech-node {
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 15px;
+        text-align: left;
+    }
+    
+    .tech-node i {
+        margin-bottom: 0;
+    }
+    
+    .devops-bar {
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+    
+    .devops-bar > div {
+        display: flex;
+        flex-wrap: nowrap;
     }
 }
-
 /* infra map architecture */
 .infra-map { display: flex; flex-direction: column; gap: 15px; padding: 10px; }
 .zone { border: 1px dashed #334155; border-radius: 8px; padding: 20px; position: relative; background: rgba(15, 23, 42, 0.5); }
