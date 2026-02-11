@@ -320,8 +320,6 @@ if (simTrigger) {
         document.querySelector('.custom-select-wrapper.open')?.classList.remove('open');
 
         simWrapper.classList.toggle('open');
-        
-        const icon = simTrigger.querySelector('i');
     });
 }
 
