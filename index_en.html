@@ -74,6 +74,31 @@
                 </div>
             </div>
 
+             <div class="custom-select-wrapper" id="sim-wrapper" style="min-width: auto; margin-right: 15px;">
+                
+                <div class="custom-select-ui" id="sim-trigger" style="min-width: auto; padding: 8px 12px; justify-content: center;">
+                    <i class="fas fa-gear" style="color: #94a3b8; transition: color 0.3s;"></i>
+                </div>
+
+                <div class="custom-options" style="width: 200px; left: auto; right: 0;">
+                    <div class="custom-option" onclick="selectSimulation('SIM_CLEAR')">
+                        Napsütés 
+                    </div>
+                    <div class="custom-option" onclick="selectSimulation('SIM_RAIN')">
+                        Eső
+                    </div>
+                    <div class="custom-option" onclick="selectSimulation('SIM_SNOW')">
+                        Hóesés
+                    </div>
+                    <div class="custom-option" onclick="selectSimulation('SIM_HOT')">
+                        Hőség
+                    </div>
+                    <div class="custom-option" onclick="selectSimulation('SIM_COLD')">
+                        Fagy
+                    </div>
+                </div>
+            </div>
+
             <span id="temp-display">--°C</span>
             
             <button id="weather-info-btn" class="info-btn" aria-label="Információ">
