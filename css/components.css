@@ -52,6 +52,42 @@
     left: 0; 
     color: var(--accent-color); 
 }
+.status-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    z-index: 9999;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none; 
+    cursor: default;
+}
+
+.status-btn.offline{
+    background-color: #2d3436;
+    color: #636e72;
+    box-shadow: none;
+}
+
+.status-btn.online {
+    background-color: #00b894; 
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 184, 148, 0.4);
+    pointer-events: auto; 
+    cursor: pointer;
+}
+
+.status-btn.online:hover {
+    background-color: #00a884;
+    transform: scale(1.05);
+}
+ .dot { margin-right: 8px; }
 
 /* visitor badge */
 .visitor-badge { 
