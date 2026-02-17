@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const BACKEND_URL = "https://unshameable-love-focusable.ngrok-free.dev"; 
+    const BACKEND_URL = "https://k8s.loczidity.me"; 
     const btn = document.getElementById('tunnelButton');
     const dot = btn ? btn.querySelector('.dot') : null;
 
