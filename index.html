@@ -30,24 +30,25 @@
 
 </head>
 <body>
-    <a id="tunnelButton" href="#" target="_blank" class="status-btn offline"> <span class="dot">🔴</span> . . . </a>
-
     <div id="tsparticles"></div>
     <header>
         <div style="display: flex; align-items: center;">
             <div class="brand">Lóczi László</div>
-                <!-- language selector -->
                 <div class="lang-switch">
                     <a href="#" class="lang-btn active">🇭🇺</a>
                     <a href="index_en.html" class="lang-btn">🇬🇧</a>
                 </div>
         </div>
-        <!-- visitor counter -->
-        <div class="visitor-badge">
-            <span class="status-dot"></span>
-            <span id="counter">Loading...</span> Visitors
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="visitor-badge">
+                <span class="status-dot"></span>
+                <span id="counter">Loading...</span> Visitors
+            </div>
+            
         </div>
     </header>
+    
     <!-- weather options -->
     <div class="weather-box">
         <div class="weather-selector">
@@ -123,19 +124,17 @@
     </div>
 
     <main>
-        <div class="hero">
-            <h2>BME VIK mérnökinformatikus hallgató</h2>
-            <div class="hero-actions">
-                
-                <a href="assets/cv/cv.pdf" target="_blank" class="btn">
+        <div class="hero-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; max-width: 850px; margin: 0 auto;">
+                <a href="assets/cv/cv.pdf" target="_blank" class="btn" style="width: auto; flex: 1 1 220px; max-width: 250px;">
                     <i class="fas fa-file-pdf"></i> CV Megtekintése
                 </a>
-
-                <button class="btn btn-outline" onclick="toggleModal()">
+                <button class="btn btn-outline" onclick="toggleModal()" style="width: auto; flex: 1 1 220px; max-width: 250px;">
                     <i class="fas fa-sitemap"></i> Architektúra
                 </button>
-                
-            </div>
+
+                <a id="tunnelButton" href="#" target="_blank" class="btn status-btn offline" style="width: auto; flex: 1 1 220px; max-width: 250px;">
+                    <span class="dot">🔴</span> <span class="tunnel-text">. . .</span>
+                </a>
         </div>
         <!-- cards -->
         <div class="grid-container">
@@ -152,8 +151,8 @@
                 <h3><i class="fab fa-aws"></i> Cloud & DevOps</h3>
                 <ul>
                     <li>AWS (S3, CloudFront, Lambda, DynamoDB)</li>
-                    <li>Docker & Kubernetes alapok</li>
-                    <li>CI/CD (GitHub Actions)</li>
+                    <li>Docker & Kubernetes </li>
+                    <li>CI/CD (GitHub Actions, Jenkins)</li>
                 </ul>
             </div>
             <!-- card for latency monitoring -->

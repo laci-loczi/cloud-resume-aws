@@ -30,8 +30,6 @@
     
 </head>
 <body>
-    <a id="tunnelButton" href="#" target="_blank" class="status-btn offline"> <span class="dot">🔴</span> . . . </a>
-
     <div id="tsparticles"></div>
     <header>
         <div style="display: flex; align-items: center;">
@@ -47,6 +45,7 @@
         </div>
     </header>
     <!-- weather options -->
+     
     <div class="weather-box">
         <div class="weather-selector">
             <div class="custom-select-wrapper">
@@ -120,19 +119,17 @@
     </div> 
 
     <main>
-        <div class="hero">
-            <h2>Computer Engineer Student at BME</h2>
-            <div class="hero-actions">
-                
-                <a href="assets/cv/cv_en.pdf" target="_blank" class="btn">
+        <div class="hero-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; max-width: 850px; margin: 0 auto;">
+                <a href="assets/cv/cv.pdf" target="_blank" class="btn" style="width: auto; flex: 1 1 220px; max-width: 250px;">
                     <i class="fas fa-file-pdf"></i> View CV
                 </a>
-
-                <button class="btn btn-outline" onclick="toggleModal()">
+                <button class="btn btn-outline" onclick="toggleModal()" style="width: auto; flex: 1 1 220px; max-width: 250px;">
                     <i class="fas fa-sitemap"></i> Architecture
                 </button>
-                
-            </div>
+
+                <a id="tunnelButton" href="#" target="_blank" class="btn status-btn offline" style="width: auto; flex: 1 1 220px; max-width: 250px;">
+                    <span class="dot">🔴</span> <span class="tunnel-text">. . .</span>
+                </a>
         </div>
         <div class="grid-container">
             <div class="card">
@@ -146,8 +143,8 @@
                 <h3><i class="fab fa-aws"></i> Cloud & DevOps</h3>
                 <ul>
                     <li>AWS (S3, CloudFront, Lambda, DynamoDB)</li>
-                    <li>Docker & Kubernetes Basics</li>
-                    <li>CI/CD (GitHub Actions)</li>
+                    <li>Docker & Kubernetes</li>
+                    <li>CI/CD (GitHub Actions, Jenkins)</li>
                 </ul>
             </div>
             <div class="card" style="grid-column: span 2; display: flex; flex-direction: column;">

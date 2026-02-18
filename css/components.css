@@ -52,50 +52,66 @@
     left: 0; 
     color: var(--accent-color); 
 }
+/* tunnel button */
 .status-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 22px;
-    border-radius: 50px;
-    font-family: sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    z-index: 9999;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(255,255,255,0.1);
     pointer-events: none; 
     cursor: default;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
 
-.status-btn.offline{
-    background-color: #2d3436;
-    color: #636e72;
+.status-btn.offline {
+    background-color: rgba(51, 65, 85, 0.3); 
+    color: #94a3b8;
+    border-color: rgba(148, 163, 184, 0.2);
     box-shadow: none;
 }
 
 .status-btn.online {
-    background-color: #00b894; 
-    color: white;
-    box-shadow: 0 0 15px rgba(0, 184, 148, 0.4);
+    background-color: rgba(16, 185, 129, 0.1); 
+    color: #34d399; 
+    border-color: rgba(52, 211, 153, 0.4);
     pointer-events: auto; 
     cursor: pointer;
 }
 
 .status-btn.online:hover {
-    background-color: #00a884;
-    transform: scale(1.05);
+    background-color: rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.15);
+}
+
+.status-btn.online .dot {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% { opacity: 1; text-shadow: 0 0 0px #34d399; }
+    50% { opacity: 0.4; text-shadow: 0 0 8px #34d399; }
+    100% { opacity: 1; text-shadow: 0 0 0px #34d399; }
 }
  .dot { margin-right: 8px; }
 
 /* visitor badge */
 .visitor-badge { 
-    font-size: 0.85rem; background: rgba(56, 189, 248, 0.1); color: var(--accent-color); 
-    padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.2); 
-    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    font-size: 0.85rem; 
+    background: rgba(56, 189, 248, 0.1); 
+    color: var(--accent-color); 
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    border: 1px solid rgba(56, 189, 248, 0.2); 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    white-space: nowrap;
 }
-.status-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
+.status-dot { 
+    width: 8px; 
+    height: 8px; 
+    background-color: #22c55e; 
+    border-radius: 50%; 
+    box-shadow: 0 0 8px #22c55e; 
+}
 
 /* language switch */
 .lang-switch { 
